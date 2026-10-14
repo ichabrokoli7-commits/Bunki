@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#faf8f5">
+<meta name="application-name" content="Bunki">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Bunki">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Bunki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf8f5;--ink:#111111;--evergreen:#111111;--lime:#ffd84d;--yellow:#ffd84d;--purple:#a78bfa;--pink:#ff719a;--green:#a7f176;--blue:#7ad3ff;--red:#e5484d;--beige:#fff3c4;--muted:#6a645b;--field:#f5f2ec;--hd:'Inter',system-ui,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0;text-align:left}
+input,textarea{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+#app{max-width:440px;margin:0 auto;min-height:100vh;padding:calc(20px + env(safe-area-inset-top)) 18px 70px}
+
+/* neo-brutal primitives */
+.ib{width:48px;height:48px;flex:0 0 48px;border:3px solid var(--ink);border-radius:12px;background:#fff;box-shadow:3px 4px 0 var(--ink);display:grid;place-items:center;transition:transform .08s,box-shadow .08s}
+.ib.y{background:var(--yellow)}
+.ib:active,.plus:active,.save:active,.col:active .cbody,.btn:active,.open:active{transform:translate(2px,3px);box-shadow:1px 1px 0 var(--ink)}
+.bar{display:flex;gap:12px;align-items:center}
+.sp{flex:1}
+
+/* home */
+.hero{font-family:var(--hd);font-weight:800;font-size:54px;line-height:1.02;letter-spacing:-.045em;margin:34px 0 0}
+.quick{display:flex;gap:12px;margin-top:28px}
+.qin{flex:1;min-width:0;display:flex;align-items:center;gap:12px;height:62px;border:3px solid var(--ink);border-radius:16px;background:#fff;box-shadow:3px 4px 0 var(--ink);padding:0 14px}
+.qin>b{font-family:var(--hd);font-size:26px;font-weight:800}
+.qin input{flex:1;min-width:0;border:0;outline:0;background:none;font-size:17px}
+.qin input::placeholder{color:#9a9a9a}
+.qin button{color:#222;display:grid;place-items:center}
+.plus{width:62px;height:62px;flex:0 0 62px;border:3px solid var(--ink);border-radius:16px;background:var(--yellow);box-shadow:3px 4px 0 var(--ink);display:grid;place-items:center;transition:transform .08s,box-shadow .08s}
+h3.sec{font-family:var(--hd);font-size:26px;font-weight:700;letter-spacing:-.02em;margin:40px 0 14px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px 26px;padding-right:4px}
+.col{position:relative;margin-top:30px;display:block;width:100%}
+.col .tab{position:absolute;left:12px;top:-20px;width:96px;height:30px;background:var(--c);border:3px solid var(--ink);border-bottom:0;border-radius:12px 20px 0 0}
+.cbody{position:relative;z-index:1;min-height:136px;background:#fff;border:3px solid var(--ink);border-radius:16px;box-shadow:4px 6px 0 var(--ink);padding:12px;display:flex;flex-direction:column;transition:transform .08s,box-shadow .08s}
+.crow{display:flex;gap:12px;align-items:flex-start}
+.cico{width:46px;height:46px;border:2px solid var(--ink);border-radius:10px;background:var(--c);display:grid;place-items:center;color:var(--ink)}
+.cnt{font-size:14px;color:var(--muted);margin-top:2px}
+.cname{margin-top:auto;font-family:var(--hd);font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.1;word-break:break-word}
+
+/* collection screen */
+.ttl{flex:1;text-align:center;min-width:0}
+.ttl h2{margin:0;font-family:var(--hd);font-size:25px;font-weight:700;letter-spacing:-.03em;line-height:1.05;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ttl small{color:var(--muted);font-size:14px}
+.saves-h{font-family:var(--hd);font-size:22px;font-weight:700;letter-spacing:-.01em;margin:30px 0 16px;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:26px 26px;padding-right:4px}
+.save{display:flex;flex-direction:column;width:100%;background:#fff;border:3px solid var(--ink);border-radius:16px;box-shadow:3px 5px 0 var(--ink);overflow:hidden;transition:transform .08s,box-shadow .08s}
+.thumb{position:relative;aspect-ratio:1.78;background:var(--yellow);border-bottom:3px solid var(--ink);display:grid;place-items:center;overflow:hidden}
+.thumb .letter{font-family:var(--hd);font-size:44px;font-weight:800}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff}
+.sb{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;min-height:92px}
+.sb b{font-family:var(--hd);font-size:18px;font-weight:700;letter-spacing:-.01em;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+.src{display:flex;align-items:center;gap:7px;color:#555;font-size:14px;min-width:0;margin-top:auto}
+.src span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fav{width:18px;height:18px;border-radius:50%;background:#d4d4d4;flex:0 0 18px;overflow:hidden;display:inline-block}
+.fav img{width:100%;height:100%;object-fit:cover;display:block}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:50px 10px;line-height:1.6}
+
+/* search */
+.sin{flex:1;min-width:0;display:flex;align-items:center;gap:10px;height:48px;border:3px solid var(--ink);border-radius:12px;background:#fff;box-shadow:3px 4px 0 var(--ink);padding:0 12px}
+.sin input{flex:1;min-width:0;border:0;outline:0;background:none;font-size:16px}
+
+/* sheets */
+#sheet{position:fixed;inset:0;z-index:20;display:none;background:rgba(10,15,13,.5);align-items:flex-end;justify-content:center}
+#sheet.on{display:flex}
+.sheet{width:100%;max-width:440px;max-height:94vh;overflow:auto;background:#fff;border:3px solid var(--ink);border-radius:28px;box-shadow:4px 6px 0 var(--ink);margin:0 14px calc(14px + env(safe-area-inset-bottom));padding:22px 20px 24px;animation:up .18s ease-out}
+@keyframes up{from{transform:translateY(30px);opacity:0}}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--hd);font-weight:700;font-size:22px;margin-bottom:12px}
+.brand .fav{width:30px;height:30px;flex-basis:30px}
+.trow{display:flex;gap:14px;align-items:flex-start}
+.trow h2{flex:1;margin:0;font-family:var(--hd);font-size:34px;font-weight:800;letter-spacing:-.035em;line-height:1.08;word-break:break-word}
+.meta{display:flex;align-items:center;gap:10px;margin:16px 0 18px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:8px;border:3px solid var(--ink);border-radius:999px;padding:6px 12px 6px 9px;font-family:var(--hd);font-weight:700;font-size:17px;background:#fff}
+.chip i{width:18px;height:18px;border:2px solid var(--ink);border-radius:5px;background:var(--c);display:block}
+.date{color:var(--muted);font-size:15px}
+.open{display:flex;align-items:center;gap:12px;background:var(--yellow);border:3px solid var(--ink);border-radius:20px;box-shadow:3px 5px 0 var(--ink);padding:16px 18px;transition:transform .08s,box-shadow .08s}
+.open div{flex:1;min-width:0}
+.open b{display:block;font-family:var(--hd);font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.open small{display:block;font-size:17px;font-weight:500;color:#5b4a12;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
+.circ{width:56px;height:56px;flex:0 0 56px;border-radius:50%;background:#111;color:var(--yellow);display:grid;place-items:center}
+.acts4{display:grid;grid-template-columns:repeat(4,1fr);margin-top:22px;border:3px solid var(--ink);border-radius:18px;box-shadow:3px 5px 0 var(--ink);overflow:hidden;background:#fff}
+.acts4 button{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 4px 14px;font-family:var(--hd);font-weight:700;font-size:17px;border-left:3px solid var(--ink);text-align:center}
+.acts4 button:first-child{border-left:0}
+.acts4 button:active{background:#f1f1f1}
+.acts4 .del{color:var(--red)}
+.lab{font-family:var(--hd);font-weight:700;font-size:16px;letter-spacing:.12em;text-transform:uppercase;margin:30px 0 12px}
+.desc{font-size:19px;line-height:1.6;color:#2a2823;margin:0}
+.desc.none{color:#999}
+.tags{display:flex;gap:10px;flex-wrap:wrap}
+.tag{display:inline-flex;align-items:center;gap:8px;border:3px solid var(--ink);border-radius:999px;padding:7px 13px;font-family:var(--hd);font-weight:700;font-size:18px;background:#fff;box-shadow:2px 3px 0 var(--ink)}
+.tag.add{color:#555}
+.tag .rm{display:grid;place-items:center;color:#777;margin-right:-4px}
+.notes{width:100%;min-height:120px;resize:none;background:#fff3c4;border:3px solid var(--ink);border-radius:18px;box-shadow:3px 5px 0 var(--ink);padding:18px 20px;font-size:19px;line-height:1.6;outline:0;display:block;overflow:hidden}
+.notes::placeholder{color:#a79a78}
+.sheet h4{font-family:var(--hd);font-size:26px;font-weight:800;letter-spacing:-.03em;margin:0 0 16px}
+.sheet p.t{margin:0 0 18px;font-size:16px;line-height:1.55;color:#333}
+.field{width:100%;border:3px solid var(--ink);border-radius:14px;background:var(--field);padding:14px 16px;font-size:17px;outline:0}
+.field:focus{background:#fff;box-shadow:3px 4px 0 var(--ink)}
+.row{display:flex;gap:12px;margin-top:20px}
+.btn{flex:1;display:grid;place-items:center;text-align:center;height:54px;border:3px solid var(--ink);border-radius:999px;background:#fff;box-shadow:3px 4px 0 var(--ink);font-family:var(--hd);font-weight:700;font-size:18px;transition:transform .08s,box-shadow .08s}
+.btn.y{background:var(--yellow)}
+.btn.r{background:var(--red);color:#fff}
+.list{display:flex;flex-direction:column;gap:12px}
+.item{display:flex;align-items:center;gap:12px;border:3px solid var(--ink);border-radius:14px;background:#fff;padding:10px 12px;box-shadow:2px 3px 0 var(--ink);font-family:var(--hd);font-weight:700;font-size:19px;width:100%}
+.item .cico{width:36px;height:36px;border-radius:8px}
+.item .sp{flex:1}
+.item .ck{color:#1d6b48}
+.sw{display:flex;gap:10px;flex-wrap:wrap}
+.sw button{width:42px;height:42px;border:3px solid var(--ink);border-radius:12px;background:var(--c);display:grid;place-items:center}
+.sw button.on{box-shadow:3px 4px 0 var(--ink);transform:translate(-1px,-1px)}
+.sw.ic button{background:#fff}
+.sw.ic button.on{background:var(--yellow)}
+.small-l{font-family:var(--hd);font-weight:700;font-size:15px;letter-spacing:.1em;text-transform:uppercase;margin:18px 0 10px;display:block}
+
+#toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:14px;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:40;font-size:15px}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media (min-width:600px){#app{padding-top:40px}}
+
+.col{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+#press{position:fixed;inset:0;z-index:30;display:none;background:rgba(10,15,13,.9)}
+#press.on{display:block;animation:fade .15s}
+@keyframes fade{from{opacity:0}}
+#press .col{position:fixed;margin:0;pointer-events:none;transform:rotate(3deg) scale(1.04);animation:pop .22s var(--pe,cubic-bezier(.34,1.56,.64,1))}
+@keyframes pop{from{transform:rotate(0) scale(1)}}
+.pb{position:fixed;width:64px;height:64px;border-radius:50%;border:3px solid var(--ink);background:#fff;box-shadow:3px 4px 0 var(--ink);display:grid;place-items:center;animation:pop2 .26s cubic-bezier(.34,1.56,.64,1) both}
+.pb.del{color:var(--red)}
+.pb:nth-of-type(2){animation-delay:.04s}.pb:nth-of-type(3){animation-delay:.08s}
+@keyframes pop2{from{transform:scale(.2);opacity:0}}
+.sheet.bs{margin:0;border-radius:34px 34px 0 0;padding:12px 22px calc(22px + env(safe-area-inset-bottom));box-shadow:none}
+.grab{width:54px;height:6px;border-radius:9px;background:var(--ink);margin:0 auto 14px}
+.bs .hrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.bs .hrow h4{margin:0}
+.xb{width:40px;height:40px;border:2px solid var(--ink);border-radius:10px;background:#fff;display:grid;place-items:center}
+.nl{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 8px}
+.nl span:first-child{font-family:var(--hd);font-weight:700;font-size:15px;letter-spacing:.12em;text-transform:uppercase}
+.nl .cn{color:var(--muted);font-size:15px}
+.sw8{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.sw8 button{aspect-ratio:1;min-width:0;border:2px solid var(--ink);border-radius:9px;background:var(--c);display:grid;place-items:center;transition:transform .08s}
+.sw8 button.on{box-shadow:3px 3px 0 var(--ink);transform:translate(-1px,-1px)}
+.sw8.ic button{background:var(--field);color:var(--ink)}
+.sw8.ic button.on{background:var(--sel);color:var(--selink)}
+.bs .lab2{font-family:var(--hd);font-weight:700;font-size:15px;letter-spacing:.12em;text-transform:uppercase;margin:22px 0 10px}
+.bs .big{width:100%;height:60px;margin-top:22px;border:3px solid var(--ink);border-radius:999px;background:var(--lime);box-shadow:3px 5px 0 var(--ink);font-family:var(--hd);font-weight:700;font-size:21px;text-align:center;display:grid;place-items:center}
+.bs .big:active{transform:translate(2px,3px);box-shadow:1px 1px 0 var(--ink)}
+.bs .dl{display:block;width:100%;text-align:center;color:var(--red);font-family:var(--hd);font-weight:700;font-size:17px;margin-top:14px;padding:8px}
+
+/* detail page */
+.hero-img{position:relative;margin:calc(-20px - env(safe-area-inset-top)) -18px 0;height:270px;background:var(--c,var(--lime));border-bottom:3px solid var(--ink);overflow:hidden;display:grid;place-items:center}
+.hero-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff}
+.hero-img .letter{font-family:var(--hd);font-size:110px;font-weight:700}
+.hero-img .bar{position:absolute;left:18px;right:18px;top:calc(20px + env(safe-area-inset-top));z-index:2}
+.dcard{position:relative;z-index:1;margin-top:-22px;background:#fff;border:3px solid var(--ink);border-radius:28px;box-shadow:4px 6px 0 var(--ink);padding:22px 20px 26px}
+.ld::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);animation:sh 1.1s infinite;pointer-events:none}
+@keyframes sh{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.badge{position:absolute;left:10px;bottom:10px;padding:5px 12px;border-radius:10px;font-family:var(--hd);font-weight:700;font-size:15px;max-width:calc(100% - 20px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:var(--c);color:var(--bc);opacity:.94}
+.pinmark{position:absolute;right:8px;top:8px;width:28px;height:28px;border-radius:8px;background:var(--lime);border:2px solid var(--ink);display:grid;place-items:center;z-index:1}
+/* search */
+.cancel{flex:0 0 auto;height:48px;padding:0 16px;border:3px solid var(--ink);border-radius:12px;background:#fff;box-shadow:3px 4px 0 var(--ink);font-family:var(--hd);font-weight:700;font-size:19px}
+.lib{margin-top:22px;background:var(--lime);border:3px solid var(--ink);border-radius:20px;box-shadow:4px 6px 0 var(--ink);padding:16px 14px 12px}
+.lib-h{display:flex;justify-content:space-between;align-items:center;min-height:36px;padding:0 4px}
+.lib-h b{font-family:var(--hd);font-size:21px;letter-spacing:-.01em;text-transform:uppercase}
+.ovw{border:2px solid var(--ink);background:#fff;border-radius:8px;padding:6px 12px;font-family:var(--hd);font-weight:700;font-size:15px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:10px}
+.stat{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 2px 8px;border-radius:12px;position:relative;text-align:center}
+.stat+.stat::before{content:'';position:absolute;left:0;top:24%;height:52%;width:2px;background:rgba(10,15,13,.28)}
+.stat.on{background:rgba(255,255,255,.45)}
+.stat.on::before,.stat.on+.stat::before{display:none}
+.stat b{font-family:var(--hd);font-size:40px;font-weight:700;line-height:1.1}
+.stat span{font-weight:600;font-size:14px}
+.sec2{display:flex;align-items:center;gap:10px;font-family:var(--hd);font-weight:700;font-size:21px;letter-spacing:.02em;text-transform:uppercase;margin:32px 0 16px}
+.rail{display:flex;gap:20px;overflow-x:auto;padding:2px 8px 16px 2px;margin-right:-18px;scroll-snap-type:x proximity;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.rail .save{flex:0 0 min(46%,190px);width:auto;scroll-snap-align:start}
+.rows{display:flex;flex-direction:column;gap:16px;margin-top:26px}
+.row-i{display:flex;align-items:center;gap:14px;width:100%;background:#fff;border:3px solid var(--ink);border-radius:16px;box-shadow:3px 5px 0 var(--ink);padding:14px}
+.row-i .cico{width:48px;height:48px;flex:0 0 48px}
+.row-i b{display:block;font-family:var(--hd);font-size:21px;font-weight:700;letter-spacing:-.01em}
+.row-i small{color:var(--muted);font-size:15px}
+.kinds{display:flex;gap:10px;margin:26px 0 22px;flex-wrap:wrap}
+.kind{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;background:#fff;border:2px solid var(--ink);font-family:var(--hd);font-weight:700;font-size:17px}
+.kind.on{background:var(--lime)}
+.ph{text-align:center;color:#a39e94;padding:34px 0 20px;font-family:var(--hd);font-weight:600;font-size:22px}
+.ph svg{display:block;margin:0 auto 16px;color:var(--ink)}
+
+/* settings */
+.slab{font-family:var(--hd);font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:30px 0 14px}
+.srow{display:flex;align-items:center;gap:14px;width:100%;background:#fff;border:3px solid var(--ink);border-radius:16px;box-shadow:3px 5px 0 var(--ink);padding:14px 16px;margin-bottom:16px;text-align:left;transition:transform .08s,box-shadow .08s}
+.srow:active{transform:translate(2px,3px);box-shadow:1px 1px 0 var(--ink)}
+.srow:disabled{opacity:.5;box-shadow:3px 5px 0 #8a918c;border-color:#8a918c;cursor:default}
+.srow:disabled:active{transform:none;box-shadow:3px 5px 0 #8a918c}
+.sico{width:48px;height:48px;flex:0 0 48px;border-radius:12px;background:var(--field);display:grid;place-items:center}
+.stx{flex:1;min-width:0}
+.stx b{display:block;font-family:var(--hd);font-size:20px;font-weight:700;letter-spacing:-.01em}
+.stx small{display:block;color:var(--muted);font-size:15px;line-height:1.35;margin-top:2px}
+.sright{color:#6b6b6b;display:grid;place-items:center}
+.tg{width:48px;height:28px;border-radius:99px;background:#cfd3cf;position:relative;display:block;transition:background .18s}
+.tg i{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .18s}
+.tg.on{background:#46c37b}.tg.on i{left:23px}
+.srow.red .stx b{color:var(--red)}.srow.red .sico{background:#fbe7e3;color:var(--red)}
+.sfoot{text-align:center;color:var(--muted);font-size:14px;margin:26px 0 0}
+.remind{display:flex;align-items:center;gap:12px;width:100%;margin-top:26px;background:#fff;border:3px solid var(--ink);border-radius:16px;box-shadow:3px 5px 0 var(--ink);padding:12px 14px;text-align:left}
+.remind .stx b{font-size:18px}
+.hw{border:3px solid var(--ink);border-radius:14px;padding:12px 14px;margin-bottom:12px;background:var(--field)}
+.hw b{display:block;font-family:var(--hd);font-size:18px;margin-bottom:3px}
+.hw span{font-size:15px;line-height:1.5;color:#4a453d}
+.pv{font-size:15.5px;line-height:1.6;color:#3a362f;margin:0 0 14px}
+
+.sech{display:flex;align-items:baseline;justify-content:space-between}
+.seeall{font-weight:600;font-size:15px;color:#4a453d;text-decoration:underline;text-underline-offset:3px}
+.brandfoot{text-align:center;margin-top:34px}
+.brandfoot .wm{font-weight:800;font-size:44px;letter-spacing:-.05em;line-height:1;margin-top:6px}
+.brandfoot .tl{font-weight:600;font-size:13px;letter-spacing:.2em;text-transform:uppercase;margin-top:8px}
+.empty svg{display:block;margin:0 auto 14px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="sheet"></div>
+<div id="press"></div>
+<div id="toast"></div>
+
+<script>
+/* ---------- icons ---------- */
+const P={
+gear:'<circle cx="12" cy="12" r="3"/><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>',
+search:'<circle cx="11" cy="11" r="7.5"/><path d="m21 21-4.3-4.3"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',
+back:'<path d="M19 12H5M12 19l-7-7 7-7"/>',
+dots:'<circle cx="12" cy="5" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="19" r="1.4" fill="currentColor"/>',
+pencil:'<path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>',
+share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',
+folder:'<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>',
+foldercog:'<path d="M10.3 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v3.3"/><circle cx="18" cy="18" r="2.5"/><path d="M18 13.5v1M18 21.5v1M21.9 15.75l-.87.5M14.97 19.75l-.87.5M21.9 20.25l-.87-.5M14.97 16.25l-.87-.5"/>',
+refresh:'<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M8 16H3v5"/>',
+trash:'<path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/>',
+arrow:'<path d="M7 17 17 7M7 7h10v10"/>',
+briefcase:'<path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16M4 6h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/>',
+palette:'<circle cx="13.5" cy="6.5" r="1" fill="currentColor"/><circle cx="17.5" cy="10.5" r="1" fill="currentColor"/><circle cx="8.5" cy="7.5" r="1" fill="currentColor"/><circle cx="6.5" cy="12.5" r="1" fill="currentColor"/><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/>',
+clip:'<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>',
+layers:'<rect x="3" y="3" width="11" height="11" rx="3"/><rect x="10" y="10" width="11" height="11" rx="3"/>',
+book:'<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>',
+star:'<path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/>',
+bolt:'<path d="M13 2 3 14h9l-1 8 10-12h-9z"/>',
+tag:'<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82zM7 7h.01"/>',
+x:'<path d="M18 6 6 18M6 6l12 12"/>',
+check:'<path d="M20 6 9 17l-5-5"/>',
+down:'<path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/>',
+up:'<path d="M12 15V3m0 0-5 5m5-5 5 5M4 21h16"/>',
+heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+music:'<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
+camera:'<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/>',
+flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/>',
+moon:'<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>',
+cloud:'<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>',
+pin:'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>',
+calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+globe:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+gift:'<path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>',
+leaf:'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10ZM2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>',
+cart:'<circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>',
+plane:'<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>',
+car:'<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M9 17h6"/>',
+coffee:'<path d="M10 2v2M14 2v2M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1M6 2v2"/>',
+film:'<rect x="2" y="2" width="20" height="20" rx="2.2"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"/>',
+bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+archive:'<rect x="2" y="3" width="20" height="5" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8M10 12h4"/>',
+chev:'<path d="m9 18 6-6-6-6"/>',
+lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+bookmark:'<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>',
+thumbtack:'<path d="M12 17v5M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/>',
+pinoff:'<path d="M12 17v5M15 9.34V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H7.89M2 2l20 20M9 9v1.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h11"/>',
+clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/>',
+link:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+utensils:'<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>',
+headphones:'<path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/>'
+};
+const ic=(n,s=24,w=2.3)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${P[n]||''}</svg>`;
+// 16 swatches, tuned to the ailene.id palette
+const COLORS=['#ffd84d','#ff719a','#a78bfa','#7ad3ff','#2fc9a8','#6fcf4a','#a7f176','#ff9f43',
+              '#fff1b8','#d9d6cf','#8aa0b8','#d28bd0','#a67c52','#171717','#ff7a6b','#6a5cf5'];
+const ICONS=['folder','star','heart','book','music','camera','flag','moon','sun','cloud','pin','calendar','globe','gift','leaf','briefcase','cart','plane','car','coffee','film','headphones','palette','utensils'];
+const inkOn=h=>{const n=parseInt(h.slice(1),16),r=n>>16,g=(n>>8)&255,b=n&255;return (0.299*r+0.587*g+0.114*b)/255>0.55?'#0a0f0d':'#ffffff'};
+// colours from the first version of the app -> new palette
+const OLDMAP={'#9a9a9a':'#a8a8a8','#ecece4':'#a8a8a8','#c0e060':'#a7f176','#d6ee30':'#a7f176','#ec6a8a':'#ff719a','#f06859':'#ff719a','#b7aef3':'#6a5cf5','#f7d57e':'#ffd84d','#f6db5b':'#ffd84d','#4fc3d9':'#7ad3ff','#a9dcf0':'#7ad3ff'};
+
+/* ---------- state ---------- */
+const KEY='bunki.v1',OLDKEY='kumpulin.v2';
+const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
+function seed(){return{cols:[
+ {id:'unsorted',name:'Unsorted',color:'#a8a8a8',icon:'folder'},
+ {id:uid(),name:'Course Online',color:'#6a5cf5',icon:'briefcase'},
+ {id:uid(),name:'Tips & Trick',color:'#a7f176',icon:'palette'},
+ {id:uid(),name:'Credential',color:'#ff719a',icon:'folder'}],saves:[],settings:{haptic:true,remind:true}}}
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(OLDKEY));if(s&&Array.isArray(s.cols)&&Array.isArray(s.saves)){if(!s.cols.find(c=>c.id==='unsorted'))s.cols.unshift({id:'unsorted',name:'Unsorted',color:'#a8a8a8',icon:'folder'});s.cols.forEach(c=>{if(OLDMAP[c.color])c.color=OLDMAP[c.color]});s.settings=Object.assign({haptic:true,remind:true},s.settings||{});return s}}catch(e){}return seed()}
+let db=load();
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){}};
+let view={name:'home'};   // home | col | search | save
+const stack=[];
+const S={q:'',tab:null,kind:'all',tag:null};   // search state
+const metaBusy=new Set();
+let sheet=null;
+let quick='';
+let q='';
+
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const colOf=id=>db.cols.find(c=>c.id===id)||db.cols[0];
+const saveOf=id=>db.saves.find(s=>s.id===id);
+const countOf=id=>db.saves.filter(s=>s.col===id).length;
+function normUrl(u){u=(u||'').trim();if(!u)return'';if(!/^https?:\/\//i.test(u))u='https://'+u;try{const x=new URL(u);if(!x.hostname.includes('.'))return'';return x.href}catch(e){return''}}
+const hostOf=u=>{try{return new URL(u).hostname.replace(/^www\./,'')}catch(e){return u}};
+const siteName=h=>{const p=h.split('.')[0]||h;return p.charAt(0).toUpperCase()+p.slice(1)};
+const dispUrl=u=>{try{const x=new URL(u);let t=x.hostname.replace(/^www\./,'')+(x.pathname==='/'?'':x.pathname);return t.length>34?t.slice(0,33)+'…':t}catch(e){return u}};
+const favOf=s=>s.logo||('https://www.google.com/s2/favicons?domain='+encodeURIComponent(hostOf(s.url))+'&sz=64');
+const fmtDate=t=>new Date(t).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true}).replace(/\b(am|pm)\b/,m=>m.toUpperCase());
+const favImg=s=>`<span class="fav"><img src="${esc(favOf(s))}" alt="" referrerpolicy="no-referrer" onerror="this.remove()"></span>`;
+let tt;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),1900)}
+
+/* ---------- metadata (auto thumbnail + description) ---------- */
+function ytThumb(u){
+  try{const x=new URL(u),h=x.hostname.replace(/^(www|m)\./,'');let id='';
+    if(h==='youtu.be')id=x.pathname.slice(1);
+    else if(h==='youtube.com')id=x.searchParams.get('v')||((x.pathname.match(/\/(shorts|embed)\/([\w-]{6,})/)||[])[2]||'');
+    return id?'https://i.ytimg.com/vi/'+id+'/hqdefault.jpg':'';
+  }catch(e){return''}
+}
+const isImg=s=>/\.(png|jpe?g|gif|webp|avif|svg)(\?|#|$)/i.test(s.url);
+async function getJSON(url,ms){
+  const c=new AbortController();const t=setTimeout(()=>c.abort(),ms||9000);
+  try{const r=await fetch(url,{signal:c.signal});if(!r.ok)return null;return await r.json()}catch(e){return null}finally{clearTimeout(t)}
+}
+async function fetchMeta(url){
+  let m=null;
+  const j=await getJSON('https://api.microlink.io/?url='+encodeURIComponent(url));
+  if(j&&j.status==='success'){const d=j.data||{};m={title:d.title||'',desc:d.description||'',image:(d.image&&d.image.url)||'',logo:(d.logo&&d.logo.url)||'',site:d.publisher||''}}
+  if(!m||(!m.title&&!m.desc)){            // second source if the first one failed
+    const j2=await getJSON('https://api.dub.co/metatags?url='+encodeURIComponent(url));
+    if(j2&&(j2.title||j2.description||j2.image))m={title:j2.title||'',desc:j2.description||'',image:j2.image||(m&&m.image)||'',logo:(m&&m.logo)||'',site:(m&&m.site)||''};
+  }
+  if(m&&!m.image)m.image=ytThumb(url);
+  if(m&&!m.image&&(m.title||m.desc)){      // last resort: a screenshot of the page
+    const j3=await getJSON('https://api.microlink.io/?url='+encodeURIComponent(url)+'&screenshot=true&meta=false',16000);
+    if(j3&&j3.status==='success'&&j3.data&&j3.data.screenshot)m.image=j3.data.screenshot.url||'';
+  }
+  return m;
+}
+function applyMeta(s,m,force){
+  if(!m)return false;
+  if(m.title&&(force||!s.titleEdited))s.title=m.title.slice(0,150);
+  if(m.desc)s.desc=m.desc.slice(0,400);
+  if(m.image)s.image=m.image;
+  if(m.logo)s.logo=m.logo;
+  if(m.site)s.site=m.site;
+  return !!(m.title||m.desc||m.image);
+}
+function softRender(){
+  const a=document.activeElement;
+  if(a&&a.id==='sq'&&view.name==='search'){const b=document.getElementById('sbody');if(b){const r=b.querySelector('.rail'),x=r?r.scrollLeft:0;b.innerHTML=searchBody();const r2=b.querySelector('.rail');if(r2)r2.scrollLeft=x}return}
+  if(a&&/^(INPUT|TEXTAREA)$/.test(a.tagName))return;
+  render();
+}
+async function loadMeta(s){
+  if(metaBusy.has(s.id))return;
+  metaBusy.add(s.id);softRender();
+  const m=await fetchMeta(s.url);
+  s.metaTried=Date.now();applyMeta(s,m,false);
+  metaBusy.delete(s.id);save();softRender();
+  return !!m;
+}
+// fetch what's missing for the saves on screen (3 at a time)
+async function ensureMeta(list){
+  const todo=list.filter(s=>!metaBusy.has(s.id)&&(!s.image||!s.desc)&&(!s.metaTried||Date.now()-s.metaTried>6e5)).slice(0,18);
+  let i=0;const worker=async()=>{while(i<todo.length)await loadMeta(todo[i++])};
+  await Promise.all([worker(),worker(),worker()]);
+}
+function visibleSaves(){
+  if(view.name==='col')return db.saves.filter(s=>s.col===view.id);
+  if(view.name==='save'){const s=saveOf(view.id);return s?[s]:[]}
+  if(view.name==='search')return db.saves.slice().sort((a,b)=>b.created-a.created).slice(0,24);
+  return [];
+}
+const kick=()=>ensureMeta(visibleSaves());
+function go(v){stack.push(view);view=v;render();scrollTo(0,0);kick()}
+function back(){view=stack.pop()||{name:'home'};render();scrollTo(0,0);kick()}
+function addSave(url,col){
+  const h=hostOf(url);
+  const s={id:uid(),url,title:h,desc:'',image:ytThumb(url),logo:'',site:siteName(h),col:col||'unsorted',notes:'',tags:[],pinned:false,seen:false,created:Date.now()};
+  db.saves.push(s);save();render();
+  loadMeta(s);
+  return s;
+}
+
+/* ---------- render ---------- */
+function colCard(c){
+  return `<button class="col" data-act="open-col" data-id="${c.id}" data-col="${c.id}" style="--c:${c.color}"><span class="tab"></span>
+  <div class="cbody"><div class="crow"><span class="cico" style="color:${inkOn(c.color)}">${ic(c.icon,24)}</span><span class="cnt">${countOf(c.id)} ${countOf(c.id)===1?'item':'items'}</span></div>
+  <span class="cname">${esc(c.name)}</span></div></button>`;
+}
+function saveCard(s,o){
+  o=o||{};
+  const c=colOf(s.col),letter=(hostOf(s.url)[0]||'?').toUpperCase();
+  return `<button class="save" data-act="open-save" data-id="${s.id}">
+   <div class="thumb ${metaBusy.has(s.id)?'ld':''}"><span class="letter">${esc(letter)}</span>${s.image?`<img src="${esc(s.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:''}
+    ${o.badge?`<span class="badge" style="--c:${c.color};--bc:${inkOn(c.color)}">${esc(c.name)}</span>`:''}${s.pinned?`<span class="pinmark">${ic('thumbtack',15,2.6)}</span>`:''}</div>
+   <div class="sb"><b>${esc(s.title)}</b><div class="src">${favImg(s)}<span>${esc(s.site||siteName(hostOf(s.url)))}</span></div></div></button>`;
+}
+function renderHome(){
+  return `<div class="bar"><button class="ib" data-act="settings" aria-label="Pengaturan">${ic('gear',26)}</button><span class="sp"></span>
+   <button class="ib" data-act="manage" aria-label="Kelola koleksi">${ic('foldercog',26)}</button>
+   <button class="ib" data-act="search" aria-label="Cari">${ic('search',26)}</button></div>
+  <h1 class="hero">Save now.<br>Find anytime.</h1>
+  <div class="quick" data-form="quick">
+   <div class="qin"><b>#</b><input id="quick" type="text" inputmode="url" placeholder="Paste a link here…" value="${esc(quick)}"><button type="button" data-act="paste" aria-label="Tempel">${ic('clip',24)}</button></div>
+   <button class="plus" type="button" data-act="submit" aria-label="Simpan">${ic('plus',32,2.6)}</button></div>
+  ${remindBanner()}
+  <div class="sech"><h3 class="sec">My Collections</h3>${db.cols.length>6?'<button class="seeall" data-act="seeall">See all</button>':''}</div>
+  <div class="cols">${db.cols.slice(0,6).map(colCard).join('')}</div>`;
+}
+function renderCol(){
+  const c=colOf(view.id);const list=db.saves.filter(s=>s.col===c.id).sort((a,b)=>(Number(!!b.pinned)-Number(!!a.pinned))||(b.created-a.created));
+  return `<div class="bar"><button class="ib" data-act="back" aria-label="Kembali">${ic('back',26)}</button>
+   <div class="ttl"><h2>${esc(c.name)}</h2><small>${list.length} ${list.length===1?'item':'items'}</small></div>
+   <button class="ib y" data-act="add-link" aria-label="Tambah link">${ic('layers',24)}</button>
+   <button class="ib" data-act="col-edit" data-id="${c.id}" aria-label="Menu">${ic('dots',24)}</button></div>
+  <div class="saves-h">Saves (${list.length})</div>
+  <div class="grid">${list.length?list.map(s=>saveCard(s)).join(''):'<div class="empty">${mascot(84)}Belum ada link di koleksi ini.<br>Tekan tombol di kanan atas untuk menambah.</div>'}</div>`;
+}
+
+/* ----- search ----- */
+function stats(){const tags={};db.saves.forEach(s=>(s.tags||[]).forEach(t=>tags[t]=(tags[t]||0)+1));
+  return{cols:db.cols.length,saves:db.saves.length,pinned:db.saves.filter(s=>s.pinned).length,tags:Object.keys(tags).length,tagMap:tags}}
+const rowCol=c=>`<button class="row-i" data-act="open-col" data-id="${c.id}"><span class="cico" style="--c:${c.color};color:${inkOn(c.color)}">${ic(c.icon,22)}</span><span><b>${esc(c.name)}</b><small>${countOf(c.id)} ${countOf(c.id)===1?'item':'items'}</small></span></button>`;
+const grid=list=>`<div class="grid">${list.map(s=>saveCard(s,{badge:true})).join('')}</div>`;
+function searchBody(){
+  const k=S.q.trim().toLowerCase(),st=stats();
+  const byNew=db.saves.slice().sort((a,b)=>b.created-a.created);
+  if(k){
+    const cols=db.cols.filter(c=>c.name.toLowerCase().includes(k));
+    const list=byNew.filter(s=>(s.title+' '+s.url+' '+(s.notes||'')+' '+(s.desc||'')+' '+(s.tags||[]).join(' ')).toLowerCase().includes(k));
+    if(!cols.length&&!list.length)return `<div class="ph">${ic('search',56,2)}Tidak ada yang cocok.</div>`;
+    return (cols.length?`<div class="sec2">Collections</div><div class="rows" style="margin-top:0">${cols.map(rowCol).join('')}</div>`:'')+(list.length?`<div class="sec2">Saves</div>${grid(list)}`:'');
+  }
+  if(S.tab==='cols')return `<div class="rows">${db.cols.map(rowCol).join('')}</div>`;
+  if(S.tab==='saves'){
+    const imgs=byNew.filter(isImg),links=byNew.filter(s=>!isImg(s));
+    const uns=byNew.filter(x=>x.seen===false);const list=S.kind==='image'?imgs:S.kind==='link'?links:S.kind==='unseen'?uns:byNew;
+    return `<div class="kinds"><button class="kind ${S.kind==='all'?'on':''}" data-act="kind" data-v="all">All ${byNew.length}</button><button class="kind ${S.kind==='link'?'on':''}" data-act="kind" data-v="link">${ic('link',18)} Links ${links.length}</button><button class="kind ${S.kind==='image'?'on':''}" data-act="kind" data-v="image">${ic('image',18)} Images ${imgs.length}</button>${uns.length||S.kind==='unseen'?`<button class="kind ${S.kind==='unseen'?'on':''}" data-act="kind" data-v="unseen">${ic('bell',18)} Unseen ${uns.length}</button>`:''}</div>`+(list.length?grid(list):`<div class="ph">Belum ada item.</div>`);
+  }
+  if(S.tab==='pinned'){const l=byNew.filter(s=>s.pinned);return `<div style="margin-top:26px"></div>`+(l.length?grid(l):`<div class="ph">${ic('thumbtack',52,2)}Belum ada yang disematkan.</div>`)}
+  if(S.tab==='tags'){
+    if(S.tag){const l=byNew.filter(s=>(s.tags||[]).includes(S.tag));return `<div class="kinds"><button class="kind on" data-act="tag-clear">${ic('tag',18)} ${esc(S.tag)} ${ic('x',16,2.6)}</button></div>`+grid(l)}
+    const names=Object.keys(st.tagMap).sort((a,b)=>st.tagMap[b]-st.tagMap[a]||a.localeCompare(b));
+    return names.length?`<div class="rows">${names.map(t=>`<button class="row-i" data-act="tag-pick" data-tag="${esc(t)}"><span class="cico" style="--c:var(--lime)">${ic('tag',22)}</span><span><b>${esc(t)}</b><small>${st.tagMap[t]} ${st.tagMap[t]===1?'save':'saves'}</small></span></button>`).join('')}</div>`:`<div class="ph">${ic('tag',52,2)}Belum ada tag.<br><span style="font-size:16px;font-weight:500">Tambahkan lewat halaman detail link.</span></div>`;
+  }
+  const rec=byNew.slice(0,10);
+  return (rec.length?`<div class="sec2">${ic('clock',24,2.4)} Recently saved</div><div class="rail">${rec.map(s=>saveCard(s,{badge:true})).join('')}</div>`:'')+`<div class="ph">${ic('search',64,2)}Type something to search…</div>`;
+}
+function renderSearch(){
+  const st=stats();
+  const tabs=[['cols','folder','Collections',st.cols],['saves','book','Saves',st.saves],['pinned','thumbtack','Pinned',st.pinned],['tags','tag','Tags',st.tags]];
+  return `<div class="bar"><label class="sin">${ic('search',24)}<input id="sq" type="search" placeholder="Find collections or saves…" value="${esc(S.q)}" autocomplete="off"></label>
+   <button class="cancel" data-act="back">Cancel</button></div>
+  <div class="lib"><div class="lib-h"><b>Your library</b>${S.tab?'<button class="ovw" data-act="ovw">Overview</button>':''}</div>
+   <div class="stats">${tabs.map(t=>`<button class="stat ${S.tab===t[0]?'on':''}" data-act="stat" data-v="${t[0]}">${ic(t[1],30,2)}<b>${t[3]}</b><span>${t[2]}</span></button>`).join('')}</div></div>
+  <div id="sbody">${searchBody()}</div>`;
+}
+
+/* ----- save detail (full page) ----- */
+function renderSave(){
+  const s=saveOf(view.id);if(!s){view={name:'home'};return renderHome()}
+  const c=colOf(s.col),letter=(hostOf(s.url)[0]||'?').toUpperCase(),ld=metaBusy.has(s.id);
+  return `<div class="hero-img ${ld?'ld':''}" style="--c:${c.color}"><span class="letter" style="color:${inkOn(c.color)}">${esc(letter)}</span>${s.image?`<img src="${esc(s.image)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`:''}
+    <div class="bar"><button class="ib" data-act="back" aria-label="Kembali">${ic('back',26)}</button><span class="sp"></span>
+    <button class="ib ${s.pinned?'y':''}" data-act="pin" aria-label="Sematkan">${ic(s.pinned?'pinoff':'thumbtack',26)}</button></div></div>
+  <div class="dcard">
+   <div class="brand">${favImg(s)}<span>${esc(s.site||siteName(hostOf(s.url)))}</span></div>
+   <div class="trow"><h2>${esc(s.title)}</h2><button class="ib" data-act="edit-title" aria-label="Ubah judul">${ic('pencil',22)}</button></div>
+   <div class="meta"><button class="chip" data-act="move" style="--c:${c.color}"><i></i>${esc(c.name)}</button><span class="date">${fmtDate(s.created)}</span></div>
+   <a class="open" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer"><div><b>Open link</b><small>${esc(dispUrl(s.url))}</small></div><span class="circ">${ic('arrow',28,2.6)}</span></a>
+   <div class="acts4">
+     <button data-act="share">${ic('share',30)}<span>Share</span></button>
+     <button data-act="move">${ic('folder',30)}<span>Move</span></button>
+     <button data-act="refresh">${ic('refresh',30)}<span>Refresh</span></button>
+     <button class="del" data-act="delete">${ic('trash',30)}<span>Delete</span></button>
+   </div>
+   <div class="lab">Description</div>
+   <p class="desc ${s.desc?'':'none'}">${s.desc?esc(s.desc):(ld?'Mengambil info dari website…':'Belum ada deskripsi. Tekan Refresh untuk mengambil dari website.')}</p>
+   <div class="lab">Tags</div>
+   <div class="tags">${(s.tags||[]).map(t=>`<span class="tag">${esc(t)}<button class="rm" data-act="rm-tag" data-tag="${esc(t)}" aria-label="Hapus tag">${ic('x',16,2.6)}</button></span>`).join('')}
+     <button class="tag add" data-act="add-tag">${ic('tag',20)}Add</button></div>
+   <div class="lab">Notes</div>
+   <textarea class="notes" id="notes" rows="3" placeholder="Tulis catatan…">${esc(s.notes||'')}</textarea>
+  </div>`;
+}
+
+/* sheets */
+function inputSheet(s){
+  return `<div class="sheet" data-form="input"><h4>${esc(s.title)}</h4>${s.text?`<p class="t">${esc(s.text)}</p>`:''}
+   <input class="field" name="v" value="${esc(s.value||'')}" placeholder="${esc(s.placeholder||'')}" autocomplete="off" ${s.inputmode?`inputmode="${s.inputmode}"`:''} autofocus>
+   <div class="row"><button type="button" class="btn" data-act="close">Batal</button><button type="button" class="btn y" data-act="submit">${esc(s.ok||'Simpan')}</button></div></div>`;
+}
+function confirmSheet(s){
+  return `<div class="sheet"><h4>${esc(s.title)}</h4><p class="t">${esc(s.text)}</p>
+   <div class="row"><button class="btn" data-act="close">Batal</button><button class="btn r" data-act="confirm-ok">${esc(s.ok||'Hapus')}</button></div></div>`;
+}
+function moveSheet(id){
+  const s=saveOf(id);
+  return `<div class="sheet"><h4>Pindah ke koleksi</h4><div class="list">${db.cols.map(c=>`<button class="item" data-act="move-to" data-id="${c.id}" style="--c:${c.color}"><span class="cico" style="color:${inkOn(c.color)}">${ic(c.icon,20)}</span><span>${esc(c.name)}</span><span class="sp"></span>${s.col===c.id?`<span class="ck">${ic('check',22,3)}</span>`:''}</button>`).join('')}</div>
+   <div class="row"><button class="btn" data-act="back-detail">Kembali</button></div></div>`;
+}
+function manageSheet(){
+  return `<div class="sheet"><h4>Kelola koleksi</h4><div class="list">${db.cols.map(c=>`<button class="item" data-act="col-edit" data-id="${c.id}" style="--c:${c.color}"><span class="cico" style="color:${inkOn(c.color)}">${ic(c.icon,20)}</span><span>${esc(c.name)}</span><span class="sp"></span><span style="color:#777;font-weight:500;font-size:15px">${countOf(c.id)}</span></button>`).join('')}</div>
+   <div class="row"><button class="btn" data-act="close">Tutup</button><button class="btn y" data-act="col-new">+ Koleksi baru</button></div></div>`;
+}
+function colFormSheet(s){
+  const c=s.draft;
+  return `<div class="sheet bs" data-form="colform" style="--sel:${c.color};--selink:${inkOn(c.color)}"><div class="grab"></div>
+   <div class="hrow"><h4>${s.id?'Edit collection':'New collection'}</h4><button type="button" class="xb" data-act="close" aria-label="Tutup">${ic('x',20,2.6)}</button></div>
+   <div class="nl"><span>Name</span><span class="cn" id="cn">${[...c.name].length}/40</span></div>
+   <input class="field" name="name" value="${esc(c.name)}" placeholder="Nama koleksi" maxlength="40" autocomplete="off">
+   <div class="lab2">Color</div>
+   <div class="sw8">${COLORS.map(x=>`<button type="button" data-act="pick-color" data-v="${x}" class="${c.color===x?'on':''}" style="--c:${x};color:${inkOn(x)}" aria-label="${x}">${c.color===x?ic('check',20,3):''}</button>`).join('')}</div>
+   <div class="lab2">Icon</div>
+   <div class="sw8 ic">${ICONS.map(x=>`<button type="button" data-act="pick-icon" data-v="${x}" class="${c.icon===x?'on':''}" aria-label="${x}">${ic(x,22)}</button>`).join('')}</div>
+   <button type="button" class="big" data-act="submit">${s.id?'Update collection':'Create collection'}</button>
+   ${s.id&&s.id!=='unsorted'?`<button type="button" class="dl" data-act="col-del">Hapus koleksi</button>`:''}</div>`;
+}
+function paintForm(){
+  const f=document.querySelector('[data-form=colform]');if(!f)return;
+  const c=sheet.draft;
+  f.style.setProperty('--sel',c.color);f.style.setProperty('--selink',inkOn(c.color));
+  f.querySelectorAll('[data-act=pick-color]').forEach(b=>{const on=b.dataset.v===c.color;b.classList.toggle('on',on);b.innerHTML=on?ic('check',20,3):''});
+  f.querySelectorAll('[data-act=pick-icon]').forEach(b=>b.classList.toggle('on',b.dataset.v===c.icon));
+}
+function backupSheet(){
+  return `<div class="sheet"><h4>Backup & Restore</h4><p class="t">Data kamu tersimpan di browser ini. Simpan cadangan secara berkala supaya aman.</p>
+   <div class="list">
+    <button class="item" data-act="export"><span class="cico" style="--c:var(--lime)">${ic('down',20)}</span><span>Export backup (.json)</span></button>
+    <label class="item" style="cursor:pointer"><span class="cico" style="--c:#a9dcf0">${ic('up',20)}</span><span>Restore backup (.json)</span><input type="file" id="imp" accept="application/json,.json" hidden></label>
+    <label class="item" style="cursor:pointer"><span class="cico" style="--c:#b7aef3">${ic('bookmark',20)}</span><span>Import bookmark browser (.html)</span><input type="file" id="impb" accept=".html,.htm,text/html" hidden></label>
+   </div>
+   <p class="t" style="margin:16px 0 0;font-size:14px;color:var(--muted)">Bookmark: di Chrome buka Bookmark Manager → ⋮ → Export bookmarks. Folder jadi koleksi; link yang sudah ada dilewati.</p>
+   <div class="row"><button class="btn" data-act="close">Tutup</button></div></div>`;
+}
+function howtoSheet(){
+  const g=[['Simpan cepat','Tempel link di kolom quick save lalu tekan +. Link masuk ke Unsorted, pindahkan kapan saja lewat tombol Move.'],
+   ['Kelola koleksi','Tahan kartu koleksi untuk Share, Edit, atau Delete. Di Edit kamu bisa ganti nama, warna, dan ikon.'],
+   ['Pin dan tag','Sematkan link penting dari halaman detail, lalu beri tag. Lihat semuanya lewat Search → Tags.'],
+   ['Cari dan tinjau','Ikon search menampilkan Your Library dan Recently saved. Ketik untuk mencari judul, catatan, atau tag.'],
+   ['Cadangan','Settings → Backup & Restore untuk ekspor, restore, dan impor bookmark dari browser.']];
+  return `<div class="sheet"><h4>How To</h4>${g.map(x=>`<div class="hw"><b>${x[0]}</b><span>${x[1]}</span></div>`).join('')}<div class="row"><button class="btn" data-act="close">Tutup</button></div></div>`;
+}
+function privacySheet(){
+  return `<div class="sheet"><h4>Privacy & Data</h4>
+   <p class="pv"><b>Tersimpan lokal.</b> Link, catatan, tag, dan koleksi hanya ada di browser perangkat ini. Tidak ada akun dan tidak ada server Bunki.</p>
+   <p class="pv"><b>Yang dikirim keluar.</b> Untuk mengambil judul, deskripsi, dan thumbnail, URL yang kamu simpan dikirim ke layanan pihak ketiga (microlink.io, cadangannya dub.co). Catatan dan tag tidak ikut dikirim. Ikon situs dimuat lewat layanan favicon Google, sehingga nama domain link ikut terkirim.</p>
+   <p class="pv"><b>Risiko kehilangan.</b> Menghapus data browser atau pindah perangkat menghapus isi Bunki, kecuali kamu sudah membuat backup.</p>
+   <div class="row"><button class="btn" data-act="close">Tutup</button></div></div>`;
+}
+function renderSheet(){
+  const el=document.getElementById('sheet');
+  if(!sheet){el.classList.remove('on');el.innerHTML='';return}
+  const m={input:()=>inputSheet(sheet),confirm:()=>confirmSheet(sheet),move:()=>moveSheet(sheet.id),manage:manageSheet,colform:()=>colFormSheet(sheet),backup:backupSheet,howto:howtoSheet,privacy:privacySheet};
+  el.innerHTML=m[sheet.type]();el.classList.add('on');
+  autoGrow();
+}
+function render(){
+  const y=scrollY,r=document.querySelector('.rail'),rx=r?r.scrollLeft:0;
+  const a=document.getElementById('app');
+  a.innerHTML=view.name==='home'?renderHome():view.name==='col'?renderCol():view.name==='search'?renderSearch():view.name==='settings'?renderSettings():renderSave();
+  const r2=document.querySelector('.rail');if(r2)r2.scrollLeft=rx;
+  scrollTo(0,y);
+  renderSheet();autoGrow();
+}
+function autoGrow(){const n=document.getElementById('notes');if(n){n.style.height='auto';n.style.height=Math.max(120,n.scrollHeight+4)+'px'}}
+
+/* ---------- helpers for sheets ---------- */
+const openSheet=s=>{sheet=s;renderSheet()};
+const closeSheet=()=>{sheet=null;renderSheet()};
+const ask=o=>openSheet({type:'input',...o});
+const confirmAsk=o=>openSheet({type:'confirm',...o});
+function download(name,text){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'application/json'}));a.download=name;a.click()}
+
+/* ---------- long-press menu on a collection ---------- */
+let press=null,lpTimer=0,lpStart=null,suppress=false;
+function openPress(id,el){
+  const r=el.getBoundingClientRect();
+  press={id,x:r.left,y:r.top,w:r.width,h:r.height,html:el.outerHTML};
+  suppress=true;setTimeout(()=>suppress=false,700);
+  buzz(14);
+  renderPress();
+}
+function closePress(){press=null;renderPress()}
+function renderPress(){
+  const el=document.getElementById('press');
+  if(!press){el.classList.remove('on');el.innerHTML='';return}
+  const {x,y,w,h}=press,W=innerWidth,left=x+w/2<W/2;
+  const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+  // three round buttons arc around the card's top corner (mirrored for the left column)
+  const pos=left
+    ?{share:[x+w-34,y-34],del:[x+w*0.42-32,y-62],edit:[x+w-4,y+66]}
+    :{share:[x-30,y-34],del:[x+w*0.55-32,y-62],edit:[x-64,y+66]};
+  const c=colOf(press.id);
+  const btn=(k,ico,label)=>`<button class="pb ${k==='del'?'del':''}" data-act="press-${k}" aria-label="${label}" style="left:${clamp(pos[k][0],8,W-72)}px;top:${Math.max(pos[k][1],70)}px">${ic(ico,28,2.4)}</button>`;
+  el.innerHTML=`<div data-act="press-close" style="position:absolute;inset:0"></div>`+
+    press.html.replace('<button class="col"',`<button class="col" tabindex="-1" style="left:${x}px;top:${y}px;width:${w}px;--c:${c.color}"`)+
+    btn('share','share','Share')+(press.id!=='unsorted'?btn('del','trash','Delete'):'')+btn('edit','pencil','Edit');
+  el.classList.add('on');
+}
+function shareCollection(id){
+  const c=colOf(id),list=db.saves.filter(s=>s.col===id);
+  if(!list.length)return toast('Koleksi ini masih kosong');
+  const text=c.name+'\n\n'+list.map(s=>'• '+s.title+'\n  '+s.url).join('\n');
+  if(navigator.share)navigator.share({title:c.name,text}).catch(()=>{});
+  else navigator.clipboard?.writeText(text).then(()=>toast('Daftar link disalin'),()=>toast('Gagal menyalin'));
+}
+document.addEventListener('pointerdown',e=>{
+  const el=e.target.closest('#app .col');if(!el)return;
+  lpStart=[e.clientX,e.clientY];
+  clearTimeout(lpTimer);lpTimer=setTimeout(()=>openPress(el.dataset.col,el),450);
+});
+document.addEventListener('pointermove',e=>{if(lpStart&&Math.hypot(e.clientX-lpStart[0],e.clientY-lpStart[1])>10){clearTimeout(lpTimer);lpStart=null}});
+['pointerup','pointercancel','scroll'].forEach(t=>document.addEventListener(t,()=>{clearTimeout(lpTimer);lpStart=null},true));
+document.addEventListener('contextmenu',e=>{const el=e.target.closest('#app .col');if(el||e.target.closest('#press')){e.preventDefault();if(el&&!press)openPress(el.dataset.col,el)}});
+
+function buzz(ms){if(db.settings&&db.settings.haptic===false)return;if(navigator.vibrate)try{navigator.vibrate(ms||10)}catch(e){}}
+const mascot=w=>`<svg width="${w||64}" viewBox="0 0 130 110" aria-hidden="true"><g stroke="#111" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"><rect x="19" y="41" width="100" height="64" rx="16" fill="#111"/><path d="M14 36V28a8 8 0 0 1 8-8h24a8 8 0 0 1 6.5 3.4L58 36z" fill="#a78bfa"/><rect x="9" y="31" width="100" height="64" rx="16" fill="#ffd84d"/></g><ellipse cx="43" cy="60" rx="5.5" ry="7.5" fill="#111"/><ellipse cx="75" cy="60" rx="5.5" ry="7.5" fill="#111"/><path d="M51 72q8 9 16 0" stroke="#111" stroke-width="5.5" fill="none" stroke-linecap="round"/></svg>`;
+const toggle=on=>`<span class="tg ${on?'on':''}"><i></i></span>`;
+function remindBanner(){
+  if(!db.settings.remind)return'';
+  const n=db.saves.filter(s=>s.seen===false).length;if(!n)return'';
+  return `<button class="remind" data-act="unseen"><span class="sico" style="background:var(--lime)">${ic('bell',24,2.2)}</span><span class="stx"><b>${n} link belum dibuka</b><small>Yuk tinjau yang sudah kamu simpan</small></span><span class="sright">${ic('chev',22,2.4)}</span></button>`;
+}
+function renderSettings(){
+  const st=db.settings;
+  const R=o=>`<button class="srow ${o.cls||''}" ${o.act?`data-act="${o.act}"`:''} ${o.k?`data-k="${o.k}"`:''} ${o.dis?'disabled':''}><span class="sico">${ic(o.ico,26,2)}</span><span class="stx"><b>${o.t}</b>${o.sub?`<small>${o.sub}</small>`:''}</span>${o.right?`<span class="sright">${o.right}</span>`:''}</button>`;
+  return `<div class="bar"><button class="ib" data-act="back" aria-label="Kembali">${ic('back',26)}</button><div class="ttl"><h2>Settings</h2></div><span style="width:48px"></span></div>
+  <div class="slab">Preferences</div>
+  ${R({ico:'bolt',t:'Haptic Feedback',sub:'Vibrate for actions and selections',act:'toggle',k:'haptic',right:toggle(st.haptic)})}
+  ${R({ico:'bell',t:'New Save Reminders',sub:'Gentle reminders to review unseen saves',act:'toggle',k:'remind',right:toggle(st.remind)})}
+  <div class="slab">Data & Storage</div>
+  ${R({ico:'cloud',t:'Cloud Sync',sub:'Cross-device sync — coming soon',dis:true})}
+  ${R({ico:'archive',t:'Backup & Restore',sub:'Local backups and bookmark imports',act:'backup',right:ic('chev',22,2.4)})}
+  <div class="slab">Support</div>
+  ${R({ico:'book',t:'How To',sub:'Quick guides for getting more from Bunki',act:'howto',right:ic('chev',22,2.4)})}
+  ${R({ico:'lock',t:'Privacy & Data',sub:'What stays on your device and what leaves it',act:'privacy',right:ic('chev',22,2.4)})}
+  <div class="slab">Danger zone</div>
+  ${R({ico:'trash',t:'Delete All Data',sub:'Remove every link and collection',act:'reset',cls:'red'})}
+  <div class="brandfoot">${mascot(76)}<div class="wm">Bunki.</div><div class="tl">Save now. Find anytime.</div><p class="sfoot">${db.saves.length} saves · ${db.cols.length} collections</p></div>`;
+}
+function importBookmarks(html){
+  const doc=new DOMParser().parseFromString(html,'text/html');
+  const have=new Set(db.saves.map(x=>x.url));
+  const generic=/^(bookmarks?( bar| menu| toolbar)?|other bookmarks|bookmark bar|favou?rites( bar)?|mobile bookmarks|unsorted)$/i;
+  let added=0,newCols=0,ci=0;
+  doc.querySelectorAll('a[href]').forEach(a=>{
+    if(added>=2000)return;
+    const raw=(a.getAttribute('href')||'').trim();if(!/^https?:\/\//i.test(raw))return;
+    const url=normUrl(raw);if(!url||have.has(url))return;
+    let name='';const dl=a.closest('dl');
+    if(dl){const prev=dl.previousElementSibling,h=(prev&&prev.tagName==='H3')?prev:(dl.parentElement&&[...dl.parentElement.children].find(x=>x.tagName==='H3'));if(h)name=h.textContent.trim()}
+    let col='unsorted';
+    if(name&&!generic.test(name)){
+      let c=db.cols.find(x=>x.name.toLowerCase()===name.toLowerCase());
+      if(!c){c={id:uid(),name:name.slice(0,40),color:COLORS[(db.cols.length+ci++)%COLORS.length],icon:'folder'};db.cols.push(c);newCols++}
+      col=c.id;
+    }
+    const h=hostOf(url);
+    db.saves.push({id:uid(),url,title:(a.textContent.trim()||h).slice(0,150),titleEdited:true,desc:'',image:ytThumb(url),logo:'',site:siteName(h),col,notes:'',tags:[],pinned:false,seen:true,created:Date.now()-(added++)});
+    have.add(url);
+  });
+  save();return{added,newCols};
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',async e=>{
+  if(e.target.id==='sheet'){return closeSheet()}
+  const b=e.target.closest('[data-act]');if(!b)return;
+  const d=b.dataset,act=d.act;buzz(8);
+  const cur=view.name==='save'?saveOf(view.id):(sheet&&sheet.id?saveOf(sheet.id):null);
+  switch(act){
+    case 'open-col': if(suppress){suppress=false;break}go({name:'col',id:d.id});break;
+    case 'submit': handleSubmit(b.closest('[data-form]'));break;
+    case 'pin': if(cur){cur.pinned=!cur.pinned;save();render();toast(cur.pinned?'Disematkan':'Sematan dilepas')}break;
+    case 'stat': S.tab=S.tab===d.v?null:d.v;S.q='';S.tag=null;S.kind='all';render();kick();break;
+    case 'ovw': S.tab=null;S.q='';S.tag=null;render();kick();break;
+    case 'kind': S.kind=d.v;render();break;
+    case 'tag-pick': S.tag=d.tag;render();break;
+    case 'tag-clear': S.tag=null;render();break;
+    case 'press-close': closePress();break;
+    case 'press-share':{const id=press.id;closePress();shareCollection(id);break}
+    case 'press-edit':{const c=colOf(press.id);closePress();openSheet({type:'colform',id:c.id,draft:{name:c.name,color:c.color,icon:c.icon}});break}
+    case 'press-del':{const c=colOf(press.id);closePress();
+      confirmAsk({title:`Hapus "${c.name}"?`,text:'Link di dalamnya dipindah ke Unsorted.',ok:'Hapus',cb:()=>{db.saves.forEach(s=>{if(s.col===c.id)s.col='unsorted'});db.cols=db.cols.filter(x=>x.id!==c.id);save();closeSheet();render();toast('Koleksi dihapus')}});break}
+    case 'back': back();break;
+    case 'search': Object.assign(S,{q:'',tab:null,kind:'all',tag:null});go({name:'search'});document.getElementById('sq')?.focus();break;
+    case 'settings': go({name:'settings'});break;
+    case 'backup': openSheet({type:'backup'});break;
+    case 'howto': openSheet({type:'howto'});break;
+    case 'privacy': openSheet({type:'privacy'});break;
+    case 'toggle': db.settings[d.k]=!db.settings[d.k];save();render();buzz(15);break;
+    case 'seeall': Object.assign(S,{q:'',tab:'cols',kind:'all',tag:null});go({name:'search'});break;
+    case 'unseen': Object.assign(S,{q:'',tab:'saves',kind:'unseen',tag:null});go({name:'search'});break;
+    case 'manage': openSheet({type:'manage'});break;
+    case 'close': closeSheet();break;
+    case 'paste':
+      try{const t=await navigator.clipboard.readText();if(t){quick=t.trim();const i=document.getElementById('quick');if(i)i.value=quick}}
+      catch(err){toast('Tidak bisa membaca clipboard, tempel manual');document.getElementById('quick')?.focus()}
+      break;
+    case 'add-link':
+      ask({title:'Tambah link',placeholder:'https://…',inputmode:'url',ok:'Simpan',cb:v=>{const u=normUrl(v);if(!u)return toast('Link tidak valid');closeSheet();addSave(u,view.id);toast('Link tersimpan')}});
+      break;
+    case 'open-save':{const sv=saveOf(d.id);if(sv&&sv.seen===false){sv.seen=true;save()}go({name:'save',id:d.id});break}
+    case 'edit-title':
+      ask({title:'Ubah judul',value:cur.title,placeholder:'Judul',ok:'Simpan',cb:v=>{if(!v)return;cur.title=v.slice(0,150);cur.titleEdited=true;save();closeSheet();render()}});
+      break;
+    case 'move': openSheet({type:'move',id:cur.id});break;
+    case 'back-detail': closeSheet();break;
+    case 'move-to': cur.col=d.id;save();closeSheet();render();toast('Dipindahkan ke '+colOf(d.id).name);break;
+    case 'share':
+      if(navigator.share){navigator.share({title:cur.title,url:cur.url}).catch(()=>{})}
+      else{navigator.clipboard?.writeText(cur.url).then(()=>toast('Link disalin'),()=>toast('Gagal menyalin'))}
+      break;
+    case 'refresh':{
+      toast('Mengambil info…');
+      const sv=cur;sv.metaTried=0;const ok=await loadMeta(sv);
+      toast(ok&&(sv.image||sv.desc)?'Diperbarui':'Tidak bisa mengambil info website');
+      break}
+    case 'delete':
+      confirmAsk({title:'Hapus link ini?',text:cur.title,ok:'Hapus',cb:()=>{db.saves=db.saves.filter(s=>s.id!==cur.id);save();closeSheet();back();toast('Link dihapus')}});
+      break;
+    case 'add-tag':
+      ask({title:'Tambah tag',placeholder:'mis. desain',ok:'Tambah',cb:v=>{v=v.replace(/^#/,'').slice(0,24);if(v&&!(cur.tags||[]).includes(v)){cur.tags=[...(cur.tags||[]),v];save()}closeSheet();render()}});
+      break;
+    case 'rm-tag': cur.tags=(cur.tags||[]).filter(t=>t!==d.tag);save();render();break;
+    case 'confirm-ok': sheet.cb();break;
+    case 'col-new': openSheet({type:'colform',id:null,draft:{name:'',color:COLORS[0],icon:'folder'}});break;
+    case 'col-edit':{const c=colOf(d.id);openSheet({type:'colform',id:c.id,draft:{name:c.name,color:c.color,icon:c.icon}});break}
+    case 'pick-color': sheet.draft.color=d.v;paintForm();break;
+    case 'pick-icon': sheet.draft.icon=d.v;paintForm();break;
+    case 'col-del':{
+      const c=colOf(sheet.id);
+      confirmAsk({title:`Hapus "${c.name}"?`,text:'Link di dalamnya dipindah ke Unsorted.',ok:'Hapus',cb:()=>{db.saves.forEach(s=>{if(s.col===c.id)s.col='unsorted'});db.cols=db.cols.filter(x=>x.id!==c.id);save();if(view.name==='col'&&view.id===c.id)view={name:'home'};closeSheet();render();toast('Koleksi dihapus')}});
+      break}
+    case 'export': download('bunki-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(db,null,2));break;
+    case 'reset':
+      confirmAsk({title:'Hapus semua data?',text:'Semua link dan koleksi akan hilang dari browser ini. Tidak bisa dibatalkan.',ok:'Hapus semua',cb:()=>{db=seed();save();view={name:'home'};closeSheet();render();toast('Data direset')}});
+      break;
+  }
+});
+
+function handleSubmit(el){
+  const f=el&&el.dataset.form;if(!f)return;
+  if(f==='quick'){
+    const u=normUrl(document.getElementById('quick').value);
+    if(!u)return toast('Tempel link yang valid dulu');
+    quick='';addSave(u,'unsorted');toast('Disimpan ke Unsorted');
+  }
+  if(f==='input'){sheet.cb(el.querySelector('[name=v]').value.trim())}
+  if(f==='colform'){
+    const name=el.querySelector('[name=name]').value.trim();if(!name)return toast('Nama koleksi wajib diisi');
+    const dr=sheet.draft;
+    if(sheet.id){const c=colOf(sheet.id);Object.assign(c,{name:name.slice(0,40),color:dr.color,icon:dr.icon})}
+    else db.cols.push({id:uid(),name:name.slice(0,40),color:dr.color,icon:dr.icon});
+    save();closeSheet();render();toast('Koleksi tersimpan');
+  }
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&e.target.tagName==='INPUT'&&e.target.type!=='file'){const el=e.target.closest('[data-form]');if(el){e.preventDefault();handleSubmit(el)}}
+});
+document.addEventListener('input',e=>{
+  if(e.target.id==='quick')quick=e.target.value;
+  if(e.target.id==='sq'){S.q=e.target.value;document.getElementById('sbody').innerHTML=searchBody()}
+  if(e.target.id==='notes'){autoGrow()}
+  if(e.target.name==='name'&&sheet&&sheet.type==='colform'){const n=document.getElementById('cn');if(n)n.textContent=[...e.target.value].length+'/40'}
+});
+document.addEventListener('focusout',e=>{
+  if(e.target.id==='notes'&&view.name==='save'){const s=saveOf(view.id);if(s){s.notes=e.target.value;save()}}
+});
+document.addEventListener('change',async e=>{
+  if(e.target.id==='impb'){
+    const f=e.target.files[0];if(!f)return;
+    try{const r=await importBookmarks(await f.text());closeSheet();render();
+      toast(r.added?`${r.added} link diimpor${r.newCols?`, ${r.newCols} koleksi baru`:''}`:'Tidak ada link baru ditemukan')}
+    catch(err){toast('File bookmark tidak valid')}
+    e.target.value='';return;
+  }
+  if(e.target.id==='imp'){
+    const f=e.target.files[0];if(!f)return;
+    try{const s=JSON.parse(await f.text());if(!Array.isArray(s.cols)||!Array.isArray(s.saves))throw 0;
+      if(!s.cols.find(c=>c.id==='unsorted'))s.cols.unshift({id:'unsorted',name:'Unsorted',color:'#a8a8a8',icon:'folder'});
+      s.cols.forEach(c=>{if(OLDMAP[c.color])c.color=OLDMAP[c.color]});
+      s.settings=Object.assign({haptic:true,remind:true},s.settings||{});db=s;save();view={name:'home'};stack.length=0;closeSheet();render();toast('Impor berhasil')}
+    catch(err){toast('File tidak valid')}
+  }
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(press)closePress();else if(sheet)closeSheet()}});
+/* error handler for broken images in thumbnails already handled inline */
+render();kick();
+try{if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('sw.js')}catch(e){}
+</script>
+</body>
+</html>
