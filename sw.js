@@ -1,5 +1,5 @@
 // Bunki service worker. Installs even if one file fails, so the app stays installable.
-const V = 'bunki-v2', RT = 'bunki-rt';
+const V = 'bunki-v3', RT = 'bunki-rt';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/favicon.svg'];
 
 self.addEventListener('install', e => {

@@ -78,32 +78,33 @@ h3.sec{font-family:var(--hd);font-size:26px;font-weight:700;letter-spacing:-.02e
 #sheet.on{display:flex}
 .sheet{width:100%;max-width:440px;max-height:94vh;overflow:auto;background:#fff;border:3px solid var(--ink);border-radius:28px;box-shadow:4px 6px 0 var(--ink);margin:0 14px calc(14px + env(safe-area-inset-bottom));padding:22px 20px 24px;animation:up .18s ease-out}
 @keyframes up{from{transform:translateY(30px);opacity:0}}
-.brand{display:flex;align-items:center;gap:10px;font-family:var(--hd);font-weight:700;font-size:22px;margin-bottom:12px}
+.brand{display:flex;align-items:center;gap:8px;font-family:var(--hd);font-weight:700;font-size:16px;margin-bottom:8px}
 .brand .fav{width:30px;height:30px;flex-basis:30px}
 .trow{display:flex;gap:14px;align-items:flex-start}
-.trow h2{flex:1;margin:0;font-family:var(--hd);font-size:34px;font-weight:800;letter-spacing:-.035em;line-height:1.08;word-break:break-word}
-.meta{display:flex;align-items:center;gap:10px;margin:16px 0 18px;flex-wrap:wrap}
+.trow h2{flex:1;margin:0;font-family:var(--hd);font-size:24px;font-weight:800;letter-spacing:-.03em;line-height:1.15;word-break:break-word}
+.meta{display:flex;align-items:center;gap:8px;margin:10px 0 12px;flex-wrap:wrap}
 .chip{display:inline-flex;align-items:center;gap:8px;border:3px solid var(--ink);border-radius:999px;padding:6px 12px 6px 9px;font-family:var(--hd);font-weight:700;font-size:17px;background:#fff}
 .chip i{width:18px;height:18px;border:2px solid var(--ink);border-radius:5px;background:var(--c);display:block}
 .date{color:var(--muted);font-size:15px}
-.open{display:flex;align-items:center;gap:12px;background:var(--yellow);border:3px solid var(--ink);border-radius:20px;box-shadow:3px 5px 0 var(--ink);padding:16px 18px;transition:transform .08s,box-shadow .08s}
+.open{display:flex;align-items:center;gap:10px;background:var(--yellow);border:3px solid var(--ink);border-radius:16px;box-shadow:3px 4px 0 var(--ink);padding:10px 12px;transition:transform .08s,box-shadow .08s}
 .open div{flex:1;min-width:0}
-.open b{display:block;font-family:var(--hd);font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
-.open small{display:block;font-size:17px;font-weight:500;color:#5b4a12;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
+.open b{display:block;font-family:var(--hd);font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.open small{display:block;font-size:14px;font-weight:500;color:#5b4a12;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
 .circ{width:56px;height:56px;flex:0 0 56px;border-radius:50%;background:#111;color:var(--yellow);display:grid;place-items:center}
-.acts4{display:grid;grid-template-columns:repeat(4,1fr);margin-top:22px;border:3px solid var(--ink);border-radius:18px;box-shadow:3px 5px 0 var(--ink);overflow:hidden;background:#fff}
-.acts4 button{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 4px 14px;font-family:var(--hd);font-weight:700;font-size:17px;border-left:3px solid var(--ink);text-align:center}
+.acts4{display:grid;grid-template-columns:repeat(4,1fr);margin-top:14px;border:3px solid var(--ink);border-radius:14px;box-shadow:3px 4px 0 var(--ink);overflow:hidden;background:#fff}
+.acts4 button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 2px 9px;font-family:var(--hd);font-weight:700;font-size:13px;border-left:3px solid var(--ink);text-align:center}
 .acts4 button:first-child{border-left:0}
 .acts4 button:active{background:#f1f1f1}
 .acts4 .del{color:var(--red)}
-.lab{font-family:var(--hd);font-weight:700;font-size:16px;letter-spacing:.12em;text-transform:uppercase;margin:30px 0 12px}
-.desc{font-size:19px;line-height:1.6;color:#2a2823;margin:0}
+.acts4 svg{width:22px;height:22px}
+.lab{font-family:var(--hd);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin:20px 0 8px}
+.desc{font-size:15px;line-height:1.5;color:#2a2823;margin:0}
 .desc.none{color:#999}
 .tags{display:flex;gap:10px;flex-wrap:wrap}
 .tag{display:inline-flex;align-items:center;gap:8px;border:3px solid var(--ink);border-radius:999px;padding:7px 13px;font-family:var(--hd);font-weight:700;font-size:18px;background:#fff;box-shadow:2px 3px 0 var(--ink)}
 .tag.add{color:#555}
 .tag .rm{display:grid;place-items:center;color:#777;margin-right:-4px}
-.notes{width:100%;min-height:120px;resize:none;background:#fff3c4;border:3px solid var(--ink);border-radius:18px;box-shadow:3px 5px 0 var(--ink);padding:18px 20px;font-size:19px;line-height:1.6;outline:0;display:block;overflow:hidden}
+.notes{width:100%;min-height:90px;resize:none;background:#fff3c4;border:3px solid var(--ink);border-radius:14px;box-shadow:3px 4px 0 var(--ink);padding:12px 14px;font-size:15px;line-height:1.6;outline:0;display:block;overflow:hidden}
 .notes::placeholder{color:#a79a78}
 .sheet h4{font-family:var(--hd);font-size:26px;font-weight:800;letter-spacing:-.03em;margin:0 0 16px}
 .sheet p.t{margin:0 0 18px;font-size:16px;line-height:1.55;color:#333}
@@ -127,6 +128,9 @@ h3.sec{font-family:var(--hd);font-size:26px;font-weight:700;letter-spacing:-.02e
 
 #toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:14px;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:40;font-size:15px}
 #toast.on{opacity:1;transform:translate(-50%,0)}
+#toast.act{pointer-events:auto;display:flex;align-items:center;gap:14px;max-width:calc(100vw - 28px)}
+#toast.act span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#toast button{color:var(--yellow);font-family:var(--hd);font-weight:800;font-size:15px;padding:4px 2px;white-space:nowrap}
 @media (min-width:600px){#app{padding-top:40px}}
 
 .col{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:manipulation}
@@ -158,11 +162,28 @@ h3.sec{font-family:var(--hd);font-size:26px;font-weight:700;letter-spacing:-.02e
 .bs .dl{display:block;width:100%;text-align:center;color:var(--red);font-family:var(--hd);font-weight:700;font-size:17px;margin-top:14px;padding:8px}
 
 /* detail page */
-.hero-img{position:relative;margin:calc(-20px - env(safe-area-inset-top)) -18px 0;height:270px;background:var(--c,var(--lime));border-bottom:3px solid var(--ink);overflow:hidden;display:grid;place-items:center}
+.mlist{display:flex;flex-direction:column;border:3px solid var(--ink);border-radius:20px;overflow:hidden;background:#fff;margin-top:6px}
+.mrow{display:flex;align-items:center;gap:14px;padding:16px 18px;font-family:var(--hd);font-weight:700;font-size:18px;text-align:left;width:100%;border-top:3px solid var(--ink)}
+.mrow:first-child{border-top:0}
+.mrow:active{background:#f1f1f1}
+.mrow svg{flex:0 0 auto}
+.mrow span:not(.pro){flex:1}
+.pro{font-size:11px;letter-spacing:.08em;background:var(--yellow);border:2px solid var(--ink);border-radius:999px;padding:2px 8px;font-family:var(--hd)}
+.ne-t{font-family:var(--hd);font-size:22px;color:var(--ink)}
+.empty .ne-b svg{display:block;flex:none;margin:0}
+.ne-b span{line-height:1;display:block}
+.save{position:relative}
+.selmark{position:absolute;top:8px;left:8px;z-index:3;width:28px;height:28px;border-radius:50%;border:3px solid var(--ink);background:#fff;display:grid;place-items:center}
+.save.sel .selmark{background:var(--yellow)}
+.save.sel{box-shadow:0 0 0 4px var(--yellow),3px 5px 0 4px var(--ink)}
+.selbar{position:fixed;left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));display:flex;gap:10px;z-index:30}
+.btn.r{background:var(--red);color:#fff}
+.ne-b{margin-top:14px;flex:none;display:inline-flex;align-items:center;gap:6px;height:46px;padding:0 20px;width:auto}
+.hero-img{position:relative;margin:calc(-20px - env(safe-area-inset-top)) -18px 0;height:180px;background:var(--c,var(--lime));border-bottom:3px solid var(--ink);overflow:hidden;display:grid;place-items:center}
 .hero-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff}
-.hero-img .letter{font-family:var(--hd);font-size:110px;font-weight:700}
+.hero-img .letter{font-family:var(--hd);font-size:72px;font-weight:700}
 .hero-img .bar{position:absolute;left:18px;right:18px;top:calc(20px + env(safe-area-inset-top));z-index:2}
-.dcard{position:relative;z-index:1;margin-top:-22px;background:#fff;border:3px solid var(--ink);border-radius:28px;box-shadow:4px 6px 0 var(--ink);padding:22px 20px 26px}
+.dcard{position:relative;z-index:1;margin-top:-18px;background:#fff;border:3px solid var(--ink);border-radius:22px;box-shadow:3px 5px 0 var(--ink);padding:16px 16px 20px}
 .ld::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);animation:sh 1.1s infinite;pointer-events:none}
 @keyframes sh{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
 .badge{position:absolute;left:10px;bottom:10px;padding:5px 12px;border-radius:10px;font-family:var(--hd);font-weight:700;font-size:15px;max-width:calc(100% - 20px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:var(--c);color:var(--bc);opacity:.94}
@@ -235,6 +256,8 @@ h3.sec{font-family:var(--hd);font-size:26px;font-weight:700;letter-spacing:-.02e
 <script>
 /* ---------- icons ---------- */
 const P={
+folderplus:'<path d="M12 10v6M9 13h6"/><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>',
+crown:'<path d="M2.5 8.5 6.5 12 12 5l5.5 7 4-3.5L20.5 19h-17z"/><path d="M4 22h16"/>',
 gear:'<circle cx="12" cy="12" r="3"/><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>',
 search:'<circle cx="11" cy="11" r="7.5"/><path d="m21 21-4.3-4.3"/>',
 plus:'<path d="M12 5v14M5 12h14"/>',
@@ -313,7 +336,7 @@ let view={name:'home'};   // home | col | search | save
 const stack=[];
 const S={q:'',tab:null,kind:'all',tag:null};   // search state
 const metaBusy=new Set();
-let sheet=null;
+let sheet=null,sel=null;
 let quick='';
 let q='';
 
@@ -328,7 +351,12 @@ const dispUrl=u=>{try{const x=new URL(u);let t=x.hostname.replace(/^www\./,'')+(
 const favOf=s=>s.logo||('https://www.google.com/s2/favicons?domain='+encodeURIComponent(hostOf(s.url))+'&sz=64');
 const fmtDate=t=>new Date(t).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true}).replace(/\b(am|pm)\b/,m=>m.toUpperCase());
 const favImg=s=>`<span class="fav"><img src="${esc(favOf(s))}" alt="" referrerpolicy="no-referrer" onerror="this.remove()"></span>`;
-let tt;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),1900)}
+let tt,toastFn=null,lastMsg='';
+function toast(m){const t=document.getElementById('toast');lastMsg=m;toastFn=null;t.classList.remove('act');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),1900)}
+function toastAct(m,label,fn){const t=document.getElementById('toast');lastMsg=m;toastFn=fn;t.innerHTML=`<span>${esc(m)}</span><button type="button" data-act="toast-act">${esc(label)}</button>`;t.classList.add('on','act');clearTimeout(tt);tt=setTimeout(()=>{t.classList.remove('on','act');toastFn=null},5500)}
+const urlKey=u=>{try{const x=new URL(u);x.hash='';return(x.host.replace(/^www\./,'')+x.pathname.replace(/\/+$/,'')+x.search).toLowerCase()}catch(e){return u}};
+const dupOf=u=>db.saves.find(x=>urlKey(x.url)===urlKey(u));
+function dupToast(u){const d=dupOf(u);toastAct(`Sudah ada di "${colOf(d.col).name}"`,'Buka',()=>{go({name:'save',id:d.id})})}
 
 /* ---------- metadata (auto thumbnail + description) ---------- */
 function ytThumb(u){
@@ -394,8 +422,8 @@ function visibleSaves(){
   return [];
 }
 const kick=()=>ensureMeta(visibleSaves());
-function go(v){stack.push(view);view=v;render();scrollTo(0,0);kick()}
-function back(){view=stack.pop()||{name:'home'};render();scrollTo(0,0);kick()}
+function go(v){sel=null;stack.push(view);view=v;render();scrollTo(0,0);kick()}
+function back(){sel=null;view=stack.pop()||{name:'home'};render();scrollTo(0,0);kick()}
 function addSave(url,col){
   const h=hostOf(url);
   const s={id:uid(),url,title:h,desc:'',image:ytThumb(url),logo:'',site:siteName(h),col:col||'unsorted',notes:'',tags:[],pinned:false,seen:false,created:Date.now()};
@@ -413,7 +441,8 @@ function colCard(c){
 function saveCard(s,o){
   o=o||{};
   const c=colOf(s.col),letter=(hostOf(s.url)[0]||'?').toUpperCase();
-  return `<button class="save" data-act="open-save" data-id="${s.id}">
+  const sl=o.sel;const on=sl&&sl.has(s.id);
+  return `<button class="save ${on?'sel':''}" data-act="${sl?'sel-toggle':'open-save'}" data-id="${s.id}">${sl?`<span class="selmark">${on?ic('check',16,3.4):''}</span>`:''}
    <div class="thumb ${metaBusy.has(s.id)?'ld':''}"><span class="letter">${esc(letter)}</span>${s.image?`<img src="${esc(s.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:''}
     ${o.badge?`<span class="badge" style="--c:${c.color};--bc:${inkOn(c.color)}">${esc(c.name)}</span>`:''}${s.pinned?`<span class="pinmark">${ic('thumbtack',15,2.6)}</span>`:''}</div>
    <div class="sb"><b>${esc(s.title)}</b><div class="src">${favImg(s)}<span>${esc(s.site||siteName(hostOf(s.url)))}</span></div></div></button>`;
@@ -427,17 +456,24 @@ function renderHome(){
    <div class="qin"><b>#</b><input id="quick" type="text" inputmode="url" placeholder="Paste a link here…" value="${esc(quick)}"><button type="button" data-act="paste" aria-label="Tempel">${ic('clip',24)}</button></div>
    <button class="plus" type="button" data-act="submit" aria-label="Simpan">${ic('plus',32,2.6)}</button></div>
   ${remindBanner()}
-  <div class="sech"><h3 class="sec">My Collections</h3>${db.cols.length>6?'<button class="seeall" data-act="seeall">See all</button>':''}</div>
-  <div class="cols">${db.cols.slice(0,6).map(colCard).join('')}</div>`;
+  <div class="sech"><h3 class="sec">My Collections</h3>${db.cols.filter(c=>!c.parent).length>6?'<button class="seeall" data-act="seeall">See all</button>':''}</div>
+  <div class="cols">${db.cols.filter(c=>!c.parent).slice(0,6).map(colCard).join('')}</div>`;
 }
 function renderCol(){
   const c=colOf(view.id);const list=db.saves.filter(s=>s.col===c.id).sort((a,b)=>(Number(!!b.pinned)-Number(!!a.pinned))||(b.created-a.created));
-  return `<div class="bar"><button class="ib" data-act="back" aria-label="Kembali">${ic('back',26)}</button>
-   <div class="ttl"><h2>${esc(c.name)}</h2><small>${list.length} ${list.length===1?'item':'items'}</small></div>
+  const subs=db.cols.filter(x=>x.parent===c.id);
+  const bar=sel?`<div class="bar"><button class="ib" data-act="sel-cancel" aria-label="Batal">${ic('x',24,2.6)}</button>
+   <div class="ttl"><h2>${sel.size} dipilih</h2><small>Ketuk link untuk memilih</small></div>
+   <button class="ib y" data-act="sel-all" aria-label="Pilih semua">${ic('check',24,2.8)}</button></div>`
+  :`<div class="bar"><button class="ib" data-act="back" aria-label="Kembali">${ic('back',26)}</button>
+   <div class="ttl"><h2>${esc(c.name)}</h2><small>${list.length} ${list.length===1?'item':'items'}${subs.length?` · ${subs.length} sub`:''}</small></div>
    <button class="ib y" data-act="add-link" aria-label="Tambah link">${ic('layers',24)}</button>
-   <button class="ib" data-act="col-edit" data-id="${c.id}" aria-label="Menu">${ic('dots',24)}</button></div>
-  <div class="saves-h">Saves (${list.length})</div>
-  <div class="grid">${list.length?list.map(s=>saveCard(s)).join(''):'<div class="empty">${mascot(84)}Belum ada link di koleksi ini.<br>Tekan tombol di kanan atas untuk menambah.</div>'}</div>`;
+   <button class="ib" data-act="col-menu" data-id="${c.id}" aria-label="Menu">${ic('dots',24)}</button></div>`;
+  const empty=!list.length&&!subs.length;
+  return bar+(subs.length&&!sel?`<div class="saves-h">Sub-collections (${subs.length})</div><div class="cols">${subs.map(colCard).join('')}</div>`:'')+
+  `<div class="saves-h">Saves (${list.length})</div>
+  <div class="grid">${list.length?list.map(s=>saveCard(s,{sel})).join(''):(empty?`<div class="empty">${mascot(84)}<b class="ne-t">No items yet</b><br><span>Tambahkan link pertama ke koleksi ini.</span><br><button class="btn y ne-b" data-act="add-link">${ic('plus',20,2.8)}<span>Add link</span></button></div>`:'<div class="empty" style="padding:24px 10px">Belum ada link di koleksi ini.</div>')}</div>`+
+  (sel?`<div style="height:90px"></div><div class="selbar"><button class="btn" data-act="sel-move">Move</button><button class="btn" data-act="sel-pin">Pin</button><button class="btn r" data-act="sel-del">Delete</button></div>`:'');
 }
 
 /* ----- search ----- */
@@ -485,7 +521,7 @@ function renderSave(){
   const c=colOf(s.col),letter=(hostOf(s.url)[0]||'?').toUpperCase(),ld=metaBusy.has(s.id);
   return `<div class="hero-img ${ld?'ld':''}" style="--c:${c.color}"><span class="letter" style="color:${inkOn(c.color)}">${esc(letter)}</span>${s.image?`<img src="${esc(s.image)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`:''}
     <div class="bar"><button class="ib" data-act="back" aria-label="Kembali">${ic('back',26)}</button><span class="sp"></span>
-    <button class="ib ${s.pinned?'y':''}" data-act="pin" aria-label="Sematkan">${ic(s.pinned?'pinoff':'thumbtack',26)}</button></div></div>
+    <button class="ib ${s.pinned?'y':''}" data-act="pin" aria-label="Sematkan">${ic(s.pinned?'pinoff':'thumbtack',24)}</button></div></div>
   <div class="dcard">
    <div class="brand">${favImg(s)}<span>${esc(s.site||siteName(hostOf(s.url)))}</span></div>
    <div class="trow"><h2>${esc(s.title)}</h2><button class="ib" data-act="edit-title" aria-label="Ubah judul">${ic('pencil',22)}</button></div>
@@ -522,14 +558,55 @@ function moveSheet(id){
   return `<div class="sheet"><h4>Pindah ke koleksi</h4><div class="list">${db.cols.map(c=>`<button class="item" data-act="move-to" data-id="${c.id}" style="--c:${c.color}"><span class="cico" style="color:${inkOn(c.color)}">${ic(c.icon,20)}</span><span>${esc(c.name)}</span><span class="sp"></span>${s.col===c.id?`<span class="ck">${ic('check',22,3)}</span>`:''}</button>`).join('')}</div>
    <div class="row"><button class="btn" data-act="back-detail">Kembali</button></div></div>`;
 }
+function moveSelSheet(){
+  return `<div class="sheet"><h4>Pindah ${sel?sel.size:0} link ke</h4><div class="list">${db.cols.map(c=>`<button class="item" data-act="move-sel-to" data-id="${c.id}" style="--c:${c.color}"><span class="cico" style="color:${inkOn(c.color)}">${ic(c.icon,20)}</span><span>${esc(c.name)}</span></button>`).join('')}</div>
+   <div class="row"><button class="btn" data-act="close">Batal</button></div></div>`;
+}
+function fmtSync(t){return t?new Date(t).toLocaleString([], {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'belum pernah'}
+function cloudSheet(){
+  return `<div class="sheet"><h4>Cloud Sync</h4><p class="t">Pindahkan koleksi ke perangkat lain lewat cloud kamu (Google Drive, iCloud, dll). Sinkron terakhir: <b>${fmtSync(db.settings.lastSync)}</b>.</p>
+   <div class="list">
+    <button class="item" data-act="cloud-save"><span class="cico" style="--c:var(--lime)">${ic('up',20)}</span><span>Kirim ke cloud</span></button>
+    <label class="item" style="cursor:pointer"><span class="cico" style="--c:#a9dcf0">${ic('down',20)}</span><span>Ambil dari cloud</span><input type="file" id="impc" accept="application/json,.json" hidden></label>
+   </div>
+   <p class="t" style="margin:16px 0 0;font-size:14px;color:var(--muted)">Kirim: pilih Google Drive di menu share. Ambil: pilih file bunki-sync.json dari Drive. Hasilnya digabung dengan data di perangkat ini, tidak menimpa. Link yang dihapus di satu perangkat tidak ikut terhapus di perangkat lain.</p>
+   <div class="row"><button class="btn" data-act="close">Tutup</button></div></div>`;
+}
+async function cloudSave(){
+  db.settings.lastSync=Date.now();save();
+  const json=JSON.stringify(db,null,2);
+  try{
+    const f=new File([json],'bunki-sync.json',{type:'application/json'});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'Bunki sync'});toast('Terkirim');render();renderSheet();return}
+  }catch(err){if(err&&err.name==='AbortError')return}
+  download('bunki-sync.json',json);toast('File diunduh, simpan ke cloud kamu');renderSheet();
+}
+function mergeDb(x){
+  let c=0,l=0;const ids=new Set(db.cols.map(k=>k.id)),sids=new Set(db.saves.map(k=>k.id)),urls=new Set(db.saves.map(k=>k.col+'|'+k.url));
+  x.cols.forEach(k=>{if(!ids.has(k.id)){if(OLDMAP[k.color])k.color=OLDMAP[k.color];db.cols.push(k);c++}});
+  x.saves.forEach(k=>{if(!sids.has(k.id)&&!urls.has(k.col+'|'+k.url)){if(!db.cols.find(q=>q.id===k.col))k.col='unsorted';db.saves.push(k);l++}});
+  db.settings.lastSync=Date.now();save();return{c,l};
+}
 function manageSheet(){
   return `<div class="sheet"><h4>Kelola koleksi</h4><div class="list">${db.cols.map(c=>`<button class="item" data-act="col-edit" data-id="${c.id}" style="--c:${c.color}"><span class="cico" style="color:${inkOn(c.color)}">${ic(c.icon,20)}</span><span>${esc(c.name)}</span><span class="sp"></span><span style="color:#777;font-weight:500;font-size:15px">${countOf(c.id)}</span></button>`).join('')}</div>
    <div class="row"><button class="btn" data-act="close">Tutup</button><button class="btn y" data-act="col-new">+ Koleksi baru</button></div></div>`;
 }
+function colMenuSheet(s){
+  const c=colOf(s.id);
+  const row=(act,ico,label,extra='')=>`<button type="button" class="mrow" data-act="${act}" data-id="${c.id}">${ico}<span>${label}</span>${extra}</button>`;
+  return `<div class="sheet bs" data-form="menu"><div class="grab"></div>
+   <div class="mlist">
+     ${row('add-link',ic('plus',24,2.4),'Add Link')}
+     ${row('select-links',ic('check',24,2.4),'Select Links')}
+     ${row('sub-col',ic('folderplus',24,2.2),'Create Sub-collection')}
+     ${row('share-col',ic('share',24,2.2),'Share Collection')}
+     ${c.id!=='unsorted'?row('col-edit',ic('pencil',24,2.2),'Edit Collection'):''}
+   </div></div>`;
+}
 function colFormSheet(s){
   const c=s.draft;
   return `<div class="sheet bs" data-form="colform" style="--sel:${c.color};--selink:${inkOn(c.color)}"><div class="grab"></div>
-   <div class="hrow"><h4>${s.id?'Edit collection':'New collection'}</h4><button type="button" class="xb" data-act="close" aria-label="Tutup">${ic('x',20,2.6)}</button></div>
+   <div class="hrow"><h4>${s.id?'Edit collection':s.parent?'New sub-collection':'New collection'}</h4><button type="button" class="xb" data-act="close" aria-label="Tutup">${ic('x',20,2.6)}</button></div>
    <div class="nl"><span>Name</span><span class="cn" id="cn">${[...c.name].length}/40</span></div>
    <input class="field" name="name" value="${esc(c.name)}" placeholder="Nama koleksi" maxlength="40" autocomplete="off">
    <div class="lab2">Color</div>
@@ -561,6 +638,9 @@ function howtoSheet(){
    ['Kelola koleksi','Tahan kartu koleksi untuk Share, Edit, atau Delete. Di Edit kamu bisa ganti nama, warna, dan ikon.'],
    ['Pin dan tag','Sematkan link penting dari halaman detail, lalu beri tag. Lihat semuanya lewat Search → Tags.'],
    ['Cari dan tinjau','Ikon search menampilkan Your Library dan Recently saved. Ketik untuk mencari judul, catatan, atau tag.'],
+   ['Simpan dari app lain','Di Chrome, YouTube, dll tekan Share lalu pilih Bunki. Link langsung masuk ke Unsorted. Salah hapus? Tekan Urungkan di notifikasi bawah.'],
+   ['Sub-koleksi dan pilih banyak','Menu titik tiga di koleksi: buat sub-koleksi, atau Select Links untuk memindah, menyematkan, dan menghapus banyak link sekaligus.'],
+   ['Cloud Sync','Settings → Cloud Sync untuk kirim data ke Google Drive dan menggabungkannya di perangkat lain.'],
    ['Cadangan','Settings → Backup & Restore untuk ekspor, restore, dan impor bookmark dari browser.']];
   return `<div class="sheet"><h4>How To</h4>${g.map(x=>`<div class="hw"><b>${x[0]}</b><span>${x[1]}</span></div>`).join('')}<div class="row"><button class="btn" data-act="close">Tutup</button></div></div>`;
 }
@@ -574,7 +654,7 @@ function privacySheet(){
 function renderSheet(){
   const el=document.getElementById('sheet');
   if(!sheet){el.classList.remove('on');el.innerHTML='';return}
-  const m={input:()=>inputSheet(sheet),confirm:()=>confirmSheet(sheet),move:()=>moveSheet(sheet.id),manage:manageSheet,colform:()=>colFormSheet(sheet),backup:backupSheet,howto:howtoSheet,privacy:privacySheet};
+  const m={input:()=>inputSheet(sheet),confirm:()=>confirmSheet(sheet),move:()=>moveSheet(sheet.id),manage:manageSheet,colform:()=>colFormSheet(sheet),colmenu:()=>colMenuSheet(sheet),movesel:moveSelSheet,cloud:cloudSheet,backup:backupSheet,howto:howtoSheet,privacy:privacySheet};
   el.innerHTML=m[sheet.type]();el.classList.add('on');
   autoGrow();
 }
@@ -586,7 +666,7 @@ function render(){
   scrollTo(0,y);
   renderSheet();autoGrow();
 }
-function autoGrow(){const n=document.getElementById('notes');if(n){n.style.height='auto';n.style.height=Math.max(120,n.scrollHeight+4)+'px'}}
+function autoGrow(){const n=document.getElementById('notes');if(n){n.style.height='auto';n.style.height=Math.max(90,n.scrollHeight+4)+'px'}}
 
 /* ---------- helpers for sheets ---------- */
 const openSheet=s=>{sheet=s;renderSheet()};
@@ -653,7 +733,7 @@ function renderSettings(){
   ${R({ico:'bolt',t:'Haptic Feedback',sub:'Vibrate for actions and selections',act:'toggle',k:'haptic',right:toggle(st.haptic)})}
   ${R({ico:'bell',t:'New Save Reminders',sub:'Gentle reminders to review unseen saves',act:'toggle',k:'remind',right:toggle(st.remind)})}
   <div class="slab">Data & Storage</div>
-  ${R({ico:'cloud',t:'Cloud Sync',sub:'Cross-device sync — coming soon',dis:true})}
+  ${R({ico:'cloud',t:'Cloud Sync',sub:'Sync via Google Drive · terakhir: '+fmtSync(st.lastSync),act:'cloud',right:ic('chev',22,2.4)})}
   ${R({ico:'archive',t:'Backup & Restore',sub:'Local backups and bookmark imports',act:'backup',right:ic('chev',22,2.4)})}
   <div class="slab">Support</div>
   ${R({ico:'book',t:'How To',sub:'Quick guides for getting more from Bunki',act:'howto',right:ic('chev',22,2.4)})}
@@ -705,7 +785,7 @@ document.addEventListener('click',async e=>{
     case 'press-share':{const id=press.id;closePress();shareCollection(id);break}
     case 'press-edit':{const c=colOf(press.id);closePress();openSheet({type:'colform',id:c.id,draft:{name:c.name,color:c.color,icon:c.icon}});break}
     case 'press-del':{const c=colOf(press.id);closePress();
-      confirmAsk({title:`Hapus "${c.name}"?`,text:'Link di dalamnya dipindah ke Unsorted.',ok:'Hapus',cb:()=>{db.saves.forEach(s=>{if(s.col===c.id)s.col='unsorted'});db.cols=db.cols.filter(x=>x.id!==c.id);save();closeSheet();render();toast('Koleksi dihapus')}});break}
+      confirmAsk({title:`Hapus "${c.name}"?`,text:'Link di dalamnya dipindah ke Unsorted.',ok:'Hapus',cb:()=>{db.saves.forEach(s=>{if(s.col===c.id)s.col='unsorted'});db.cols.forEach(x=>{if(x.parent===c.id)delete x.parent});db.cols=db.cols.filter(x=>x.id!==c.id);save();closeSheet();render();toast('Koleksi dihapus')}});break}
     case 'back': back();break;
     case 'search': Object.assign(S,{q:'',tab:null,kind:'all',tag:null});go({name:'search'});document.getElementById('sq')?.focus();break;
     case 'settings': go({name:'settings'});break;
@@ -722,7 +802,7 @@ document.addEventListener('click',async e=>{
       catch(err){toast('Tidak bisa membaca clipboard, tempel manual');document.getElementById('quick')?.focus()}
       break;
     case 'add-link':
-      ask({title:'Tambah link',placeholder:'https://…',inputmode:'url',ok:'Simpan',cb:v=>{const u=normUrl(v);if(!u)return toast('Link tidak valid');closeSheet();addSave(u,view.id);toast('Link tersimpan')}});
+      ask({title:'Tambah link',placeholder:'https://…',inputmode:'url',ok:'Simpan',cb:v=>{const u=normUrl(v);if(!u)return toast('Link tidak valid');closeSheet();if(dupOf(u))return dupToast(u);addSave(u,view.id);toast('Link tersimpan')}});
       break;
     case 'open-save':{const sv=saveOf(d.id);if(sv&&sv.seen===false){sv.seen=true;save()}go({name:'save',id:d.id});break}
     case 'edit-title':
@@ -747,14 +827,30 @@ document.addEventListener('click',async e=>{
       ask({title:'Tambah tag',placeholder:'mis. desain',ok:'Tambah',cb:v=>{v=v.replace(/^#/,'').slice(0,24);if(v&&!(cur.tags||[]).includes(v)){cur.tags=[...(cur.tags||[]),v];save()}closeSheet();render()}});
       break;
     case 'rm-tag': cur.tags=(cur.tags||[]).filter(t=>t!==d.tag);save();render();break;
-    case 'confirm-ok': sheet.cb();break;
+    case 'confirm-ok':{const snap=JSON.stringify(db),fn=sheet.cb;fn();
+      if(JSON.stringify(db)!==snap)toastAct(lastMsg||'Dihapus','Urungkan',()=>{db=JSON.parse(snap);save();sel=null;render();toast('Dikembalikan')});
+      break}
+    case 'toast-act':{const f=toastFn;toastFn=null;document.getElementById('toast').classList.remove('on','act');if(f)f();break}
     case 'col-new': openSheet({type:'colform',id:null,draft:{name:'',color:COLORS[0],icon:'folder'}});break;
+    case 'col-menu': openSheet({type:'colmenu',id:d.id});break;
+    case 'select-links': sheet=null;sel=new Set();render();break;
+    case 'sel-cancel': sel=null;render();break;
+    case 'sel-all':{const ids=db.saves.filter(x=>x.col===view.id).map(x=>x.id);if(sel.size===ids.length)sel.clear();else ids.forEach(i=>sel.add(i));render();break}
+    case 'sel-toggle': if(sel){sel.has(d.id)?sel.delete(d.id):sel.add(d.id);buzz(10);render()}break;
+    case 'sel-move': if(!sel||!sel.size)return toast('Pilih link dulu');openSheet({type:'movesel'});break;
+    case 'move-sel-to':{const n=sel.size;db.saves.forEach(x=>{if(sel.has(x.id))x.col=d.id});save();sel=null;closeSheet();render();toast(n+' link dipindahkan ke '+colOf(d.id).name);break}
+    case 'sel-pin':{if(!sel||!sel.size)return toast('Pilih link dulu');const items=db.saves.filter(x=>sel.has(x.id));const all=items.every(x=>x.pinned);items.forEach(x=>x.pinned=!all);save();toast(all?'Sematan dilepas':'Disematkan');sel=null;render();break}
+    case 'sel-del':{if(!sel||!sel.size)return toast('Pilih link dulu');const n=sel.size;confirmAsk({title:`Hapus ${n} link?`,text:'Link yang dipilih akan dihapus permanen.',ok:'Hapus',cb:()=>{db.saves=db.saves.filter(x=>!sel.has(x.id));save();sel=null;closeSheet();render();toast(n+' link dihapus')}});break}
+    case 'sub-col': openSheet({type:'colform',id:null,parent:view.id,draft:{name:'',color:COLORS[(db.cols.length)%COLORS.length],icon:'folder'}});break;
+    case 'cloud': openSheet({type:'cloud'});break;
+    case 'cloud-save':await cloudSave();break;
+    case 'share-col': closeSheet();shareCollection(view.id);break;
     case 'col-edit':{const c=colOf(d.id);openSheet({type:'colform',id:c.id,draft:{name:c.name,color:c.color,icon:c.icon}});break}
     case 'pick-color': sheet.draft.color=d.v;paintForm();break;
     case 'pick-icon': sheet.draft.icon=d.v;paintForm();break;
     case 'col-del':{
       const c=colOf(sheet.id);
-      confirmAsk({title:`Hapus "${c.name}"?`,text:'Link di dalamnya dipindah ke Unsorted.',ok:'Hapus',cb:()=>{db.saves.forEach(s=>{if(s.col===c.id)s.col='unsorted'});db.cols=db.cols.filter(x=>x.id!==c.id);save();if(view.name==='col'&&view.id===c.id)view={name:'home'};closeSheet();render();toast('Koleksi dihapus')}});
+      confirmAsk({title:`Hapus "${c.name}"?`,text:'Link di dalamnya dipindah ke Unsorted.',ok:'Hapus',cb:()=>{db.saves.forEach(s=>{if(s.col===c.id)s.col='unsorted'});db.cols.forEach(x=>{if(x.parent===c.id)delete x.parent});db.cols=db.cols.filter(x=>x.id!==c.id);save();if(view.name==='col'&&view.id===c.id)view={name:'home'};closeSheet();render();toast('Koleksi dihapus')}});
       break}
     case 'export': download('bunki-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(db,null,2));break;
     case 'reset':
@@ -768,14 +864,14 @@ function handleSubmit(el){
   if(f==='quick'){
     const u=normUrl(document.getElementById('quick').value);
     if(!u)return toast('Tempel link yang valid dulu');
-    quick='';addSave(u,'unsorted');toast('Disimpan ke Unsorted');
+    if(dupOf(u))return dupToast(u);quick='';addSave(u,'unsorted');toast('Disimpan ke Unsorted');
   }
   if(f==='input'){sheet.cb(el.querySelector('[name=v]').value.trim())}
   if(f==='colform'){
     const name=el.querySelector('[name=name]').value.trim();if(!name)return toast('Nama koleksi wajib diisi');
     const dr=sheet.draft;
     if(sheet.id){const c=colOf(sheet.id);Object.assign(c,{name:name.slice(0,40),color:dr.color,icon:dr.icon})}
-    else db.cols.push({id:uid(),name:name.slice(0,40),color:dr.color,icon:dr.icon});
+    else{const nc={id:uid(),name:name.slice(0,40),color:dr.color,icon:dr.icon};if(sheet.parent)nc.parent=sheet.parent;db.cols.push(nc)}
     save();closeSheet();render();toast('Koleksi tersimpan');
   }
 }
@@ -799,6 +895,13 @@ document.addEventListener('change',async e=>{
     catch(err){toast('File bookmark tidak valid')}
     e.target.value='';return;
   }
+  if(e.target.id==='impc'){
+    const f=e.target.files[0];if(!f)return;
+    try{const x=JSON.parse(await f.text());if(!Array.isArray(x.cols)||!Array.isArray(x.saves))throw 0;
+      const r=mergeDb(x);closeSheet();render();ensureMeta(visibleSaves());toast(r.l||r.c?`${r.l} link, ${r.c} koleksi digabung`:'Sudah sinkron, tidak ada yang baru')}
+    catch(err){toast('File sync tidak valid')}
+    e.target.value='';return;
+  }
   if(e.target.id==='imp'){
     const f=e.target.files[0];if(!f)return;
     try{const s=JSON.parse(await f.text());if(!Array.isArray(s.cols)||!Array.isArray(s.saves))throw 0;
@@ -811,6 +914,16 @@ document.addEventListener('change',async e=>{
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(press)closePress();else if(sheet)closeSheet()}});
 /* error handler for broken images in thumbnails already handled inline */
 render();kick();
+/* Share target: links shared from other apps arrive as ?url= / ?text= */
+(function(){try{
+  const q=new URLSearchParams(location.search);if(!(q.has('url')||q.has('text')||q.has('title')))return;
+  const m=[q.get('url'),q.get('text'),q.get('title')].filter(Boolean).join(' ').match(/https?:\/\/[^\s]+/i);
+  history.replaceState(null,'',location.pathname);
+  const u=m&&normUrl(m[0].replace(/[)\].,;]+$/,''));
+  if(!u)return toast('Tidak ada link di yang dibagikan');
+  if(dupOf(u))return dupToast(u);
+  addSave(u,'unsorted');toast('Disimpan ke Unsorted');
+}catch(e){}})();
 try{if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('sw.js')}catch(e){}
 </script>
 </body>
